@@ -1,12 +1,13 @@
 const router = require("express").Router();
 
-const multer = require("../milddlewares/multer");
+const multer = require("../middlewares/multer");
 
-const { createPost } = require("../controllers/post");
+const { createPost, deletePost, updatePost } = require("../controllers/post");
 
-const {postValidator, validate} = require("../milddlewares/postValidator");
+const {postValidator, validate} = require("../middlewares/postValidator");
 
-const {parseData} = require("../milddlewares/index");
+const {parseData} = require("../middlewares/index");
+
 
 router.post("/create", 
 multer.single("thumbnail"),
@@ -14,7 +15,15 @@ parseData,
 postValidator, 
 validate,  
 createPost );
-//router.get('/api/post/latest');
+
+router.put("/:postId", 
+multer.single("thumbnail"),
+parseData,
+postValidator, 
+validate,  
+updatePost );
+
+router.delete('/:postId', deletePost); 
 
 module.exports = router;
 
