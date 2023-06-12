@@ -22,6 +22,11 @@ const addToFeaturedPost = async (postId) => {
     });
 };
 
+
+const removeFromFeaturedPost = async (postId) => {
+    await FeaturedPost.findOneAndDelete({post : postId});
+};
+
 exports.createPost = async (req, res) => {
     const {title, content, meta, tags, author, slug, featured} = req.body;
     const {file} = req;
@@ -44,12 +49,12 @@ exports.createPost = async (req, res) => {
     }
 
     res.json({post: 
-        {id: newPost._id,
+        {   id: newPost._id,
             title, 
             meta,
             slug,
-            content,
-            thumbnail: newPost.thumbnail?.url, author: newPost.author,}});
+            thumbnail: newPost.thumbnail?.url, 
+            author: newPost.author,},});
 
 };
 
@@ -82,7 +87,7 @@ exports.updatePost = async (req, res) => {
     const {file} = req;
     const { postId } = req.params;
     if (!isValidObjectId(postId)) {
-        return res.status(401).json({error: 'Invalid request!'});
+        return res.status(401).json({error: 'Invalid request!'} );
     }
 
     const post = await Post.findById(postId);
@@ -90,7 +95,7 @@ exports.updatePost = async (req, res) => {
         return res.status(404).json({error: 'Post not found'});
     }
 
-    const public_id = post.thumbnail?.public-_id;
+    const public_id = post.thumbnail?.public_id;
     if (public_id && file) {
         const {result} = await cloudinary.uploader.destroy(public_id);
         if (result !== 'ok') {
@@ -103,4 +108,37 @@ exports.updatePost = async (req, res) => {
         post.thumbnail = {url, public_id};
     }
     
+    post.title = title;
+    post.meta = meta;
+    post.content = content;
+    post.slug = slug;
+    post.author = author;
+    post.tags = tags;
+
+    if (featured) {
+        await addToFeaturedPost(postId);
+    }
+    else{
+        await removeFromFeaturedPost(postId);
+    }
+    
+    await post.save();
+    res.json({ 
+        post:{ 
+            id: post._id,
+            title, 
+            meta,
+            slug,
+            content,
+            thumbnail: post.thumbnail?.url,   
+            author: post.author, 
+            featured,
+        },
+    });
+
+
 };
+
+exports.getPost = async (req, res) =>  {//FALTA ISSO
+
+}
