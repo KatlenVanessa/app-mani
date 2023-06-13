@@ -2,7 +2,7 @@ const router = require("express").Router();
 
 const multer = require("../middlewares/multer");
 
-const { createPost, deletePost, updatePost, getPost } = require("../controllers/post");
+const { createPost, deletePost, updatePost, getPost, getFeaturedPost, getFeaturedPosts } = require("../controllers/post");
 
 const {postValidator, validate} = require("../middlewares/postValidator");
 
@@ -25,7 +25,9 @@ updatePost );
 
 router.delete('/:postId', deletePost); 
 
-router.get('/single//:postId', getPost); 
+router.get('/single/:postId', getPost); 
+
+router.get('/featured-posts', getFeaturedPosts); 
 
 module.exports = router;
 
