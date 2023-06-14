@@ -22,7 +22,6 @@ const addToFeaturedPost = async (postId) => {
     });
 };
 
-
 const removeFromFeaturedPost = async (postId) => {
     await FeaturedPost.findOneAndDelete({post : postId});
 };
@@ -62,7 +61,6 @@ exports.createPost = async (req, res) => {
             author: newPost.author,},});
 
 };
-
 
 exports.deletePost = async (req, res) => {
     const { postId } = req.params;
@@ -254,5 +252,17 @@ exports.getRelatedPosts = async (req, res) =>  {
         author: post.author,
         })),
     });    
+};
+
+exports.uploadImage = async (req, res) =>  {
+    const { file } = req;
+    if (!file) {
+        return res.status(401).json({ error: 'Image file is missing'});
+    }
+
+    const {secure_url: url, public_id} = await cloudinary.uploader.upload(file.path)
+         
+    res.status(201).json({image: url});
+   
 };
 
