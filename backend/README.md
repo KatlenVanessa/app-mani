@@ -7,5 +7,3 @@
 - instalar MongoDB
 - instalar Postman
 
-
-The background color is `#fff` for light mode and `#000000` for dark mode.
