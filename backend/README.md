@@ -1,7 +1,7 @@
-npm i express dotenv mongoose
-npm i nodemon morgan -D
-npm i express-validator
-npm i cloudinary
+-npm i express dotenv mongoose
+-npm i nodemon morgan -D
+-npm i express-validator
+-npm i cloudinary
 
-instalar MongoDB
-instalar Postman
+-instalar MongoDB
+-instalar Postman
