@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import CreatePost from "./components/CreatePost ";
 import UpdatePost from "./components/UpdatePost";
 import NotFound from "./components/NotFound";
+import NavBar from "./components/NavBar";
 
 function App() {
 
@@ -18,9 +19,13 @@ function App() {
 
   return (
     <div className="flex">
-      <div className={`${getNavWidth()} h-screen bg-red-100 transition-width`}></div>
+      <div className={`${getNavWidth()} h-screen bg-purple-200 transition-width`}>
+        <NavBar closed={closedNav}></NavBar>
+      </div>
 
-      <div className="flex-1 min-h-screen bg-blue-100">
+
+
+      <div className="flex-1 min-h-screen bg-purple-100">
         <button onClick={toggleNav}>
           {closedNav ? (
             <AiOutlineMenuUnfold size={25}/>
