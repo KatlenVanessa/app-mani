@@ -2,7 +2,7 @@ import React from 'react';
 import { AiFillFileAdd, AiOutlineHome } from 'react-icons/ai';
 import { NavLink } from 'react-router-dom';
 
-const NavItem = ({to, value, Icon}) => {
+const NavItem = ({to, value, closed, Icon}) => {
     const commonClasses = 'flex items-center space-x-2 w-full p-2 block whitespace-nowrap';
     const activeClass = commonClasses + ' bg-blue-500 text-white';
     const inActiveClass = commonClasses + 'text-gray-500';
@@ -28,6 +28,9 @@ const NavItem = ({to, value, Icon}) => {
 const NavBar = ({closed}) => {
     return (
         <nav>
+            <div>
+                <img></img>
+            </div>
             <ul>
                 <li>
                    <NavItem closed={closed} to='/' value='Home' Icon={<AiOutlineHome size={24} />} />
