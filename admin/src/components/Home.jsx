@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPosts } from "../api/post";
+import PostCard from "./PostCard";
 
 let pageNo = 0
 const POST_LIMIT = 9
@@ -20,9 +21,8 @@ export default function Home() {
     useEffect(() => {
         fetchPosts()
     }, []);
-    return <div>{
+    return <div className="grid grid-clos-3 gap-3">{
         posts.map(post => {
-            return <div>{post.title}</div>
-        })
+            return <PostCard key={post.id} post={post}/>        })
     }</div>;
 }
