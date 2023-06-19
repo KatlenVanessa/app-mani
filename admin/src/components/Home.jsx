@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPosts } from "../api/post";
 import PostCard from "./PostCard";
-import dateFormat from 'dateformat';
 
 let pageNo = 0
 const POST_LIMIT = 9
