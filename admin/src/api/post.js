@@ -26,3 +26,17 @@ export const deletePost = async (postId) => {
         return { error: error.message || error };
     }
 };
+
+
+export const searchPost = async (query) => {
+    try {
+        const { data } = await client.delete(`/post/search?title=${query}`);
+        return data;
+    } catch (error) {
+        const { response } = error;
+        if (response?.data) {
+            return response.data;
+        }
+        return { error: error.message || error };
+    }
+};

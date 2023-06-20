@@ -41,13 +41,13 @@ export default function Home() {
         fetchPosts();
     };
 
-    const handleDelete = async ({id}) => {
+    const handleDelete = async ({ id }) => {
         const confirmed = window.confirm('Are you sure?');
         if (!confirmed) {
             return;
         }
-        const {error, message} = await deletePost(id);
-        
+        const { error, message } = await deletePost(id);
+
         if (error) {
             return console.log(error);
             console.log(message);
@@ -59,15 +59,15 @@ export default function Home() {
 
     return (
         <div>
-            <div className="grid grid-cols-3 gap-3">
+            <div className="grid grid-cols-3 gap-3 pb-5">
                 {posts.map((post) => {
-                    return <PostCard key={post.id} post={post} onDeleteClick={() => handleDelete(post)}/>;
+                    return <PostCard key={post.id} post={post} onDeleteClick={() => handleDelete(post)} />;
                 })}
             </div>
-            <div className="py-5 flex justify-center items-center space-x-3">{paginationArr.map((_, index) => {
+            {paginationArr.length > 1 ? (<div className="py-5 flex justify-center items-center space-x-3">{paginationArr.map((_, index) => {
                 return <button onClick={() => fetchMorePosts(index)} className={index === pageNo ? 'text-blue-500 border-b-2 border-b-blue-500' : 'text-gray-500'}>{index + 1}</button>;
             })}
-            </div>
+            </div>) : null}
         </div>
     );
 }
