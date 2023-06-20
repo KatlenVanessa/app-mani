@@ -197,6 +197,8 @@ exports.getPosts = async (req, res) => {
     const { pageNo = 0, limit = 10 } = req.query;
     const posts = await Post.find({}).sort({ createdAt: -1 }).skip(parseInt(pageNo) * parseInt(limit)).limit(parseInt(limit));
 
+    const postCount = await Post.countDocuments();
+
     res.json({
         posts: posts.map((post) => ({
             id: post._id,
@@ -206,8 +208,9 @@ exports.getPosts = async (req, res) => {
             thumbnail: post.thumbnail?.url,
             author: post.author,
             createdAt: post.createdAt,
-            tags: this.createPost.tags
+            tags: post.tags
         })),
+        postCount,
     });
 
 

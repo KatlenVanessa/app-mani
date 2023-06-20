@@ -2,7 +2,7 @@ import React from 'react';
 import dateFormat from 'dateformat';
 import { BsPencilSquare, BsTrash } from 'react-icons/bs'
 import { Link } from 'react-router-dom';
-const PostCard = ({ post }) => {
+const PostCard = ({ post, onDeleteClick }) => {
     if (!post) {
         return null;
     }
@@ -18,15 +18,15 @@ const PostCard = ({ post }) => {
                     <p className=' text-gray-500 text-sm'>
                         {dateFormat(createdAt, 'mediumDate')}
                     </p>
-                    {/* <p className=' text-gray-500 text-small'>{tags.join(', ')}</p> NAO FUNCIONA*/}
+                    <p className=' text-gray-500 text-small'>{tags.join(', ')}</p>
                 </div>
 
                 <div className='flex space-x-3'>
-                    <Link to={`/update-post/${slug}`} className='w-8 h-8 rounded-full bg-blue-400 hover:bg-blue-600 flex justify-center items-center'>
+                    <Link to={`/update-post/${slug}`} className='w-8 h-8 rounded-full bg-blue-400 hover:bg-blue-600 flex justify-center items-center text-white'>
                         <BsPencilSquare></BsPencilSquare>
 
                     </Link>
-                    <button className='w-8 h-8 rounded-full bg-red-400 hover:bg-red-600 flex justify-center items-center'>
+                    <button onClick={onDeleteClick} className='w-8 h-8 rounded-full bg-red-400 hover:bg-red-600 flex justify-center items-center text-white'>
                         <BsTrash></BsTrash>
 
                     </button>
