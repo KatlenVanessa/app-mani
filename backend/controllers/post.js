@@ -223,7 +223,7 @@ exports.searchPost = async (req, res) => {
         return res.status(401).json({ error: "search query is missing" });
     };
 
-    const posts = await Post.find({ title: { $regex: title, $option: "i" } });
+    const posts = await Post.find({ title: { $regex: title, } });
 
     res.json({
         posts: posts.map((post) => ({
