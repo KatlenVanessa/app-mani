@@ -217,7 +217,7 @@ exports.getPosts = async (req, res) => {
 
 };
 
-exports.searchPosts = async (req, res) => {
+exports.searchPost = async (req, res) => {
     const { title } = req.query;
     if (!title.trim()) {
         return res.status(401).json({ error: "search query is missing" });
@@ -233,6 +233,8 @@ exports.searchPosts = async (req, res) => {
             slug: post.slug,
             thumbnail: post.thumbnail?.url,
             author: post.author,
+            createdAt: post.createdAt,
+            tags: post.tags
         })),
     });
 };

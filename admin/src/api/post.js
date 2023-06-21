@@ -30,7 +30,7 @@ export const deletePost = async (postId) => {
 
 export const searchPost = async (query) => {
     try {
-        const { data } = await client.delete(`/post/search?title=${query}`);
+        const { data } = await client(`/post/search?title=${query}`);
         return data;
     } catch (error) {
         const { response } = error;

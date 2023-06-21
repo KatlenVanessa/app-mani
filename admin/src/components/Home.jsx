@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { deletePost, getPosts } from "../api/post";
 import PostCard from "./PostCard";
+import { useSearch } from "../context/SearchProvider";
 
 let pageNo = 0
 const POST_LIMIT = 4
@@ -14,6 +15,7 @@ const getPaginationCount = (length) => {
 };
 
 export default function Home() {
+    const { searchResult } = useSearch();
     const [posts, setPosts] = useState([])
     const [totalPostCount, setTotalPostCount] = useState([]);
 
@@ -60,12 +62,16 @@ export default function Home() {
     return (
         <div>
             <div className="grid grid-cols-3 gap-3 pb-5">
-                {posts.map((post) => {
-                    return <PostCard key={post.id} post={post} onDeleteClick={() => handleDelete(post)} />;
-                })}
+                {searchResult.length
+                    ? searchResult.map((post) => {
+                        return (<PostCard key={post.id} post={post} onDeleteClick={() => handleDelete(post)} />);
+
+                    }) : posts.map((post) => {
+                        return (<PostCard key={post.id} post={post} onDeleteClick={() => handleDelete(post)} />);
+                    })}
             </div>
-            {paginationArr.length > 1 ? (<div className="py-5 flex justify-center items-center space-x-3">{paginationArr.map((_, index) => {
-                return <button onClick={() => fetchMorePosts(index)} className={index === pageNo ? 'text-blue-500 border-b-2 border-b-blue-500' : 'text-gray-500'}>{index + 1}</button>;
+            {paginationArr.length > 1 && !searchResult.length ? (<div className="py-5 flex justify-center items-center space-x-3">{paginationArr.map((_, index) => {
+                return <button key={index} onClick={() => fetchMorePosts(index)} className={index === pageNo ? 'text-blue-500 border-b-2 border-b-blue-500' : 'text-gray-500'}>{index + 1}</button>;
             })}
             </div>) : null}
         </div>
