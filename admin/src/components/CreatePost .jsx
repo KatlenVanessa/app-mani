@@ -1,10 +1,11 @@
 import React from "react";
-import { ImSpinner11, ImEye } from 'react-icons/im'
+import { ImSpinner11, ImEye, ImFilePicture, ImFilesEmpty } from 'react-icons/im'
 
 export default function CreatePost() {
     return (
-        <form className="h-screen space-y-3 p-3 flex flex-col">
-            {/* title and submit */}
+        <form className="p-2">
+            <div className="w-9/12 h-screen space-y-3 flex flex-col">
+                {/* title and submit */}
             <div className="flex items-center justify-between">
                 <h1 className="text-x1 font-semibold text-gray-700">Crie uma nova postagem</h1>
 
@@ -28,9 +29,34 @@ export default function CreatePost() {
             <div>
                 <input type='text' className="text-x1 outline-none focus:ring-1 rounded p-2 w-full font-semibold" placeholder="Título da Postagem" ></input>
             </div>
+            {/* image input */}
+            <div className="flex space-x-2">
+                <div>
+                    <input id="image-input" type="file" hidden></input>
+                    <label className="flex items-center space-x-2 px-3 ring-1 ring-gray-700 rounded h-10 text-gray-700  hover:text-white hover:bg-gray-700 transition cursor-pointer">
+                        <span>
+                            Place image
+                        </span>
+                        <ImFilePicture></ImFilePicture>
+                    </label>
+                </div>
+
+                <div className="flex-1 flex bg-gray-400 rounded overflow-hidden">
+                    <input type='text'
+                        value='link'
+                        className="bg-transparent px-2 text-white w-full"
+                        disabled></input>
+                    <button className="text-xs flex flex-col items-center justify-center p-1 self-stretch bg-gray-700 text-white">
+                        <ImFilesEmpty></ImFilesEmpty>
+                        copy
+                    </button>
+                </div>
+            </div>
+
             <div>
                 <textarea className='resize-none outline-none focus:ring-1 rounded p-2 w-full h-30 font-semibold flex-1 font-mono tracking-wide text-lg' placeholder="## Markdown"></textarea>
             </div>
+
             {/* tags input */}
             <div>
                 <label htmlFor='tags'>Tags</label>
@@ -41,6 +67,7 @@ export default function CreatePost() {
             <div>
                 <label htmlFor='meta'>Meta description</label>
                 <textarea id='meta' className='resize-none outline-none focus:ring-1 rounded p-2 w-full' placeholder="Meta description"></textarea>
+            </div>
             </div>
         </form>
     );
