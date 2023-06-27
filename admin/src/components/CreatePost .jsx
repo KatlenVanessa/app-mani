@@ -6,17 +6,29 @@ const mdRules = [
         title: "From h1 to h6", rule: "# Heading -> ###### Heading"
     },
     {
-        title:"Blockquote", rule: "> Your Quote"
+        title: "Blockquote", rule: "> Your Quote"
     },
     {
         title: "Image", rule: "![image alt](http://image_url.com)"
     },
     {
-        title: "Link", rule:"[Link Text](http://your_link.com)"
+        title: "Link", rule: "[Link Text](http://your_link.com)"
     },
 ];
 
+const defaultPost = {
+    title: "",
+    thumbnail: "",
+    featured: "",
+    content: "",
+    tags: "",
+    meta: ""
+}
+
 export default function CreatePost() {
+    const [postInfo, setPostInfo] = useState({ ...defaultPost });
+
+    const { title, thumbnail, featured, content, tags, meta } = postInfo;
     return (
         <form className="p-2 flex">
             <div className="w-9/12 h-screen space-y-3 flex flex-col">
@@ -42,7 +54,7 @@ export default function CreatePost() {
                 </div>
                 {/* title input */}
                 <div>
-                    <input type='text' className="text-x1 outline-none focus:ring-1 rounded p-2 w-full font-semibold" placeholder="Título da Postagem" ></input>
+                    <input value={title} name='title' onChange={handleChange} type='text' className="text-x1 outline-none focus:ring-1 rounded p-2 w-full font-semibold" placeholder="Título da Postagem" ></input>
                 </div>
                 {/* image input */}
                 <div className="flex space-x-2">
@@ -70,26 +82,26 @@ export default function CreatePost() {
                 </div>
 
                 <div>
-                    <textarea className='resize-none outline-none focus:ring-1 rounded p-2 w-full h-30 font-semibold flex-1 font-mono tracking-wide text-lg' placeholder="## Markdown"></textarea>
+                    <textarea value={content} name="content" className='resize-none outline-none focus:ring-1 rounded p-2 w-full font-semibold flex-1 font-mono tracking-wide text-lg' placeholder="## Markdown"></textarea>
                 </div>
 
                 {/* tags input */}
                 <div>
                     <label htmlFor='tags'>Tags</label>
-                    <input type='text' id="tags" className="outline-none focus:ring-1 rounded p-2 w-full" placeholder="Título da Postagem" ></input>
+                    <input onChange={handleChange} value={tags} name="tags" type='text' id="tags" className="outline-none focus:ring-1 rounded p-2 w-full" placeholder="Tag one, tag two" ></input>
                 </div>
 
                 {/* meta description input */}
                 <div>
                     <label htmlFor='meta'>Meta description</label>
-                    <textarea id='meta' className='resize-none outline-none focus:ring-1 rounded p-2 w-full' placeholder="Meta description"></textarea>
+                    <textarea value={meta} name="meta" id='meta' className='resize-none outline-none focus:ring-1 rounded p-2 w-full' placeholder="Meta description"></textarea>
                 </div>
             </div>
 
             <div className="w-1/4 px-2 relative">
                 <h1 className="text-x1 font-semibold text-gray-700 mb-2">Thumbnail</h1>
                 <div>
-                    <input id="thumbnail" type='file' hidden></input>
+                    <input name="thumbnail" id="thumbnail" type='file' hidden></input>
                     <label className="cursor-pointer" htmlFor="thumbnail">
                         <div className="border border-dashed border-gray-500 aspect-video text-gray-500 flex flex-col justify-center items-center">
                             <span>Select Thumbnail</span>
@@ -101,15 +113,15 @@ export default function CreatePost() {
                 <div className="bg-white absolute top-1/2-translate-y-1/2 px-2 py-4 rounded">
                     <h1 className="font-semibold text-center">General Markdown Rules</h1>
                     <ul className="space-y-2">
-                        {mdRules.map(({title, rule}) => {
-                            return(
+                        {mdRules.map(({ title, rule }) => {
+                            return (
                                 <li key={title}>
                                     <p className="font-semibold text-gray-500">{title}</p>
                                     <p className="font-semibold text-gray-700 pl-2 font-mono">{rule}</p>
                                 </li>
                             );
                         })}
-                        <li className="text-center">
+                        <li className="text-center text-blue-500">
                             <a href="https://www.markdownguide.org/basic-syntax/" target="_blank">Find out more</a>
                         </li>
                     </ul>
