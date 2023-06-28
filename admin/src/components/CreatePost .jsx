@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ImSpinner11, ImEye, ImFilePicture, ImFilesEmpty } from 'react-icons/im'
 
 const mdRules = [
@@ -27,6 +27,11 @@ const defaultPost = {
 
 export default function CreatePost() {
     const [postInfo, setPostInfo] = useState({ ...defaultPost });
+
+    const handleChange = ({target}) => {
+        const {value, name} = target;
+        setPostInfo({...postInfo, [name]: value});
+    };
 
     const { title, thumbnail, featured, content, tags, meta } = postInfo;
     return (
@@ -82,7 +87,7 @@ export default function CreatePost() {
                 </div>
 
                 <div>
-                    <textarea value={content} name="content" className='resize-none outline-none focus:ring-1 rounded p-2 w-full font-semibold flex-1 font-mono tracking-wide text-lg' placeholder="## Markdown"></textarea>
+                    <textarea value={content} onChange={handleChange} name="content" className='resize-none outline-none focus:ring-1 rounded p-2 w-full font-semibold flex-1 font-mono tracking-wide text-lg' placeholder="## Markdown"></textarea>
                 </div>
 
                 {/* tags input */}
@@ -94,14 +99,14 @@ export default function CreatePost() {
                 {/* meta description input */}
                 <div>
                     <label htmlFor='meta'>Meta description</label>
-                    <textarea value={meta} name="meta" id='meta' className='resize-none outline-none focus:ring-1 rounded p-2 w-full' placeholder="Meta description"></textarea>
+                    <textarea onChange={handleChange} value={meta} name="meta" id='meta' className='resize-none outline-none focus:ring-1 rounded p-2 w-full' placeholder="Meta description"></textarea>
                 </div>
             </div>
 
             <div className="w-1/4 px-2 relative">
                 <h1 className="text-x1 font-semibold text-gray-700 mb-2">Thumbnail</h1>
                 <div>
-                    <input name="thumbnail" id="thumbnail" type='file' hidden></input>
+                    <input onChange={handleChange} name="thumbnail" id="thumbnail" type='file' hidden></input>
                     <label className="cursor-pointer" htmlFor="thumbnail">
                         <div className="border border-dashed border-gray-500 aspect-video text-gray-500 flex flex-col justify-center items-center">
                             <span>Select Thumbnail</span>
@@ -110,6 +115,8 @@ export default function CreatePost() {
                         </div>
                     </label>
                 </div>
+
+                {/* Markdown */}
                 <div className="bg-white absolute top-1/2-translate-y-1/2 px-2 py-4 rounded">
                     <h1 className="font-semibold text-center">General Markdown Rules</h1>
                     <ul className="space-y-2">
