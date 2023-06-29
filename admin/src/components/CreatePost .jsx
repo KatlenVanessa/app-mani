@@ -27,10 +27,20 @@ const defaultPost = {
 
 export default function CreatePost() {
     const [postInfo, setPostInfo] = useState({ ...defaultPost });
+    const [selectedThumbnailURL, setSelectedThumbnailURL] = useState('');
+    const handleChange = ({ target }) => {
+        const { value, name } = target;
 
-    const handleChange = ({target}) => {
-        const {value, name} = target;
-        setPostInfo({...postInfo, [name]: value});
+        if (name === 'thumbnail') {
+            const file = target.files[0];
+            if (!file.type?.includes('image')) {
+                return alert('this is not an image')
+            }
+            setPostInfo({ ...postInfo, [thumbnail]: value });
+            return setSelectedThumbnailURL(URL.createObjectURL(file));
+        }
+
+        setPostInfo({ ...postInfo, [name]: value });
     };
 
     const { title, thumbnail, featured, content, tags, meta } = postInfo;
@@ -108,15 +118,22 @@ export default function CreatePost() {
                 <div>
                     <input onChange={handleChange} name="thumbnail" id="thumbnail" type='file' hidden></input>
                     <label className="cursor-pointer" htmlFor="thumbnail">
-                        <div className="border border-dashed border-gray-500 aspect-video text-gray-500 flex flex-col justify-center items-center">
-                            <span>Select Thumbnail</span>
-                            <span className="text-xs">Recommended</span>
-                            <span className="text-xs">1280 * 720</span>
-                        </div>
+                        {selectedThumbnailURL ? (
+                            <img src={selectedThumbnailURL}
+                                className="aspect-video shadow-sm rounded"
+                                alt="">
+                            </img>
+                        ) : (
+                            <div className="border border-dashed border-gray-500 aspect-video text-gray-500 flex flex-col justify-center items-center">
+                                <span>Select Thumbnail</span>
+                                <span className="text-xs">Recommended</span>
+                                <span className="text-xs">1280 * 720</span>
+
+                            </div>)}
                     </label>
                 </div>
 
-                {/* Markdown */}
+                {/* Markdown rules*/}
                 <div className="bg-white absolute top-1/2-translate-y-1/2 px-2 py-4 rounded">
                     <h1 className="font-semibold text-center">General Markdown Rules</h1>
                     <ul className="space-y-2">
@@ -133,7 +150,7 @@ export default function CreatePost() {
                         </li>
                     </ul>
                 </div>
-            </div>
-        </form>
+            </div >
+        </form >
     );
 }
