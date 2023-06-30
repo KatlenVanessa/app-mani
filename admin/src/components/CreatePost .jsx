@@ -19,7 +19,7 @@ const mdRules = [
 const defaultPost = {
     title: "",
     thumbnail: "",
-    featured: "",
+    featured: false,
     content: "",
     tags: "",
     meta: ""
@@ -29,7 +29,7 @@ export default function CreatePost() {
     const [postInfo, setPostInfo] = useState({ ...defaultPost });
     const [selectedThumbnailURL, setSelectedThumbnailURL] = useState('');
     const handleChange = ({ target }) => {
-        const { value, name } = target;
+        const { value, name, checked } = target;
 
         if (name === 'thumbnail') {
             const file = target.files[0];
@@ -38,6 +38,21 @@ export default function CreatePost() {
             }
             setPostInfo({ ...postInfo, [thumbnail]: value });
             return setSelectedThumbnailURL(URL.createObjectURL(file));
+        }
+
+        if (name === 'featured') {
+            return setPostInfo({ ...postInfo, [name]: checked });
+        }
+
+        if (name === 'tags') {
+            const newTags = tags.split(", ");
+            if (newTags.length > 4) {
+                console.log("Only first four tags will be selected");
+            }
+        }
+
+        if (name === 'meta' && meta.length > 150) {
+            return setPostInfo({ ...postInfo, meta: value.substring(0, 150)});
         }
 
         setPostInfo({ ...postInfo, [name]: value });
@@ -58,12 +73,14 @@ export default function CreatePost() {
                     </div>
                 </div>
                 {/* featured checkbox */}
-                <div>
-                    <input id='featured' type="checkbox" hidden></input>
-                    <label className='flex items-center space-x-2 text-gray-700' htmlFor='featured'>
-                        <div className="w-4 h-4 rounded-full border-2 border-gray-700 flex items-center justify-center">
-                            <div className="w-2 h-2 rounded-full bg-gray-500"></div>
+                <div className="flex">
+                    <input name="featured" onChange={handleChange} id='featured' type="checkbox" hidden></input>
+                    <label className='select-none flex items-center space-x-2 text-gray-700' htmlFor='featured'>
+
+                        <div className="w-4 h-4 rounded-full border-2 border-gray-700 flex items-center justify-center group-hover:border-blue-500">
+                            {featured && (<div className=" w-2 h-2 rounded-full bg-gray-700  group-hover:border-blue-500"></div>)}
                         </div>
+
                         <span className="group-hover:gb-blue-500">Destaques</span>
                     </label>
                 </div>
