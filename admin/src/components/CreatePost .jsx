@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import { ImSpinner11, ImEye, ImFilePicture, ImFilesEmpty } from 'react-icons/im'
+import { ImSpinner11, ImEye, ImFilesEmpty, ImFilePicture, ImSpinner3 } from 'react-icons/im'
+import { uploadImage } from "../api/post";
+
 
 const mdRules = [
     {
@@ -28,6 +30,9 @@ const defaultPost = {
 export default function CreatePost() {
     const [postInfo, setPostInfo] = useState({ ...defaultPost });
     const [selectedThumbnailURL, setSelectedThumbnailURL] = useState('');
+    const [imageUrlToCopy, setImageUrlToCopy] = useState('');
+    const [imageUploading, setImageUploading] = useState(false);
+    
     const handleChange = ({ target }) => {
         const { value, name, checked } = target;
 
@@ -51,11 +56,31 @@ export default function CreatePost() {
             }
         }
 
-        if (name === 'meta' && meta.length > 150) {
-            return setPostInfo({ ...postInfo, meta: value.substring(0, 150)});
+        if (name === 'meta' && meta.length >= 150) {
+            return setPostInfo({ ...postInfo, meta: value.substring(0, 149)});
         }
 
         setPostInfo({ ...postInfo, [name]: value });
+    };
+
+    const handleImageUpload = async({target}) => {
+        if (imageUploading) {
+            return;
+        }
+
+        const file = target.files[0];
+        if (!file.type?.includes('image')) {
+            return alert('this is not an image');
+        }
+        setImageUploading(true);
+        const formData = new FormData();
+        formData.append("image", file);
+        const {error, image} = await uploadImage(formData);
+        setImageUploading(false);
+        if (error) {
+            return console.log(error);
+        }
+        setImageUrlToCopy(image);
     };
 
     const { title, thumbnail, featured, content, tags, meta } = postInfo;
@@ -67,8 +92,8 @@ export default function CreatePost() {
                     <h1 className="text-x1 font-semibold text-gray-700">Crie uma nova postagem</h1>
 
                     <div className="flex items-center space-x-5">
-                        <button className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImSpinner11></ImSpinner11><span>Reset</span></button>
-                        <button className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImEye></ImEye><span>View</span></button>
+                        <button type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImSpinner11></ImSpinner11><span>Reset</span></button>
+                        <button type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImEye></ImEye><span>View</span></button>
                         <button className="h-10 w-36 px-5 hover:ring-1 bg-blue-500 rounded text-white hover:bg-blue-500 hover:bg-transparent ring-blue-500 transition">Post</button>
                     </div>
                 </div>
@@ -91,26 +116,25 @@ export default function CreatePost() {
                 {/* image input */}
                 <div className="flex space-x-2">
                     <div>
-                        <input id="image-input" type="file" hidden></input>
-                        <label className="flex items-center space-x-2 px-3 ring-1 ring-gray-700 rounded h-10 text-gray-700  hover:text-white hover:bg-gray-700 transition cursor-pointer">
+                        <input onChange={handleImageUpload} id="image-input" type="file" hidden></input>
+                        <label htmlFor="image-input" className="flex items-center space-x-2 px-3 ring-1 ring-gray-700 rounded h-10 text-gray-700  hover:text-white hover:bg-gray-700 transition cursor-pointer">
                             <span>
                                 Place image
                             </span>
-                            <ImFilePicture></ImFilePicture>
+                            {!imageUploading ? (<ImFilePicture></ImFilePicture>) : (<ImSpinner3 className="animate-spin"></ImSpinner3>)}
                         </label>
                     </div>
 
-                    <div className="flex-1 flex bg-gray-400 rounded overflow-hidden">
+                    {imageUrlToCopy && (<div className="flex-1 flex bg-gray-400 rounded overflow-hidden">
                         <input type='text'
-                            value='link'
+                            value={imageUrlToCopy}
                             className="bg-transparent px-2 text-white w-full"
                             disabled></input>
-                        <button className="text-xs flex flex-col items-center justify-center p-1 self-stretch bg-gray-700 text-white">
+                        <button onClick={handleChange} type="button" className="text-xs flex flex-col items-center justify-center p-1 self-stretch bg-gray-700 text-white">
                             <ImFilesEmpty></ImFilesEmpty>
                             copy
                         </button>
-                    </div>
-
+                    </div>)}
                 </div>
 
                 <div>
@@ -119,13 +143,13 @@ export default function CreatePost() {
 
                 {/* tags input */}
                 <div>
-                    <label htmlFor='tags'>Tags</label>
+                    <label className="text-gray-500" htmlFor='tags'>Tags</label>
                     <input onChange={handleChange} value={tags} name="tags" type='text' id="tags" className="outline-none focus:ring-1 rounded p-2 w-full" placeholder="Tag one, tag two" ></input>
                 </div>
 
                 {/* meta description input */}
                 <div>
-                    <label htmlFor='meta'>Meta description</label>
+                    <label className="text-gray-500" htmlFor='meta'>Meta description {meta.length} / 150</label>
                     <textarea onChange={handleChange} value={meta} name="meta" id='meta' className='resize-none outline-none focus:ring-1 rounded p-2 w-full' placeholder="Meta description"></textarea>
                 </div>
             </div>
