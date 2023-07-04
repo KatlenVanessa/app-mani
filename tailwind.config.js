@@ -2,7 +2,12 @@
 module.exports = {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      transitionProperty:{
+        width: "width",
+        bottom: "bottom",
+      }
+    },
   },
   plugins: [],
 }

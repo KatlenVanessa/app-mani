@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ImSpinner11, ImEye, ImFilesEmpty, ImFilePicture, ImSpinner3 } from 'react-icons/im'
 import { uploadImage } from "../api/post";
+import { useNotification } from "../context/NotificationProvider";
 
 
 const mdRules = [
@@ -32,7 +33,8 @@ export default function CreatePost() {
     const [selectedThumbnailURL, setSelectedThumbnailURL] = useState('');
     const [imageUrlToCopy, setImageUrlToCopy] = useState('');
     const [imageUploading, setImageUploading] = useState(false);
-    
+    const { updateNotification } = useNotification();
+
     const handleChange = ({ target }) => {
         const { value, name, checked } = target;
 
@@ -50,37 +52,47 @@ export default function CreatePost() {
         }
 
         if (name === 'tags') {
-            const newTags = tags.split(", ");
+            const newTags = tags.split(",");//Decidir se vai ser ', ' ou ','
             if (newTags.length > 4) {
+                console.log("test1");
+                updateNotification('warning', 'Only first four tags will be selected');
                 console.log("Only first four tags will be selected");
-            }
+            };
+            
         }
 
         if (name === 'meta' && meta.length >= 150) {
-            return setPostInfo({ ...postInfo, meta: value.substring(0, 149)});
+            return setPostInfo({ ...postInfo, meta: value.substring(0, 149) });
         }
 
-        setPostInfo({ ...postInfo, [name]: value });
+        const newPost = { ...postInfo, [name]: value };
+        setPostInfo({...newPost});
+        localStorage.setItem('blogPost', JSON.stringify(newPost));
     };
 
-    const handleImageUpload = async({target}) => {
+    const handleImageUpload = async ({ target }) => {
         if (imageUploading) {
             return;
         }
 
         const file = target.files[0];
         if (!file.type?.includes('image')) {
-            return alert('this is not an image');
+            return updateNotification('error', 'this is not an image');
         }
         setImageUploading(true);
         const formData = new FormData();
         formData.append("image", file);
-        const {error, image} = await uploadImage(formData);
+        const { error, image } = await uploadImage(formData);
         setImageUploading(false);
         if (error) {
             return console.log(error);
         }
         setImageUrlToCopy(image);
+    };
+
+    const handleOnCopy = () => {
+        const textToCopy = `![Add image description](${imageUrlToCopy})`;
+        navigator.clipboard.writeText(textToCopy);
     };
 
     const { title, thumbnail, featured, content, tags, meta } = postInfo;
@@ -130,7 +142,7 @@ export default function CreatePost() {
                             value={imageUrlToCopy}
                             className="bg-transparent px-2 text-white w-full"
                             disabled></input>
-                        <button onClick={handleChange} type="button" className="text-xs flex flex-col items-center justify-center p-1 self-stretch bg-gray-700 text-white">
+                        <button onClick={handleOnCopy} type="button" className="text-xs flex flex-col items-center justify-center p-1 self-stretch bg-gray-700 text-white">
                             <ImFilesEmpty></ImFilesEmpty>
                             copy
                         </button>
