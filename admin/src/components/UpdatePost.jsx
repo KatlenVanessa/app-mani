@@ -1,9 +1,8 @@
 import React from "react";
+import PostForm from "./PostForm";
 
 export default function UpdatePost(){
     return(
-            <div>
-                <h1>UpdatePost</h1>
-            </div>
+            <PostForm></PostForm>
         )
 }
