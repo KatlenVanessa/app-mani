@@ -13,7 +13,7 @@ export const defaultPost = {
     meta: ""
 }
 
-export default function PostForm({initialPost, busy, postBtnTitle,onSubmit, resetAfterSubmit}) {
+export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSubmit,onSubmit}) {
     const [postInfo, setPostInfo] = useState({ ...defaultPost });
     const [selectedThumbnailURL, setSelectedThumbnailURL] = useState('');
     const [imageUrlToCopy, setImageUrlToCopy] = useState('');
@@ -22,8 +22,16 @@ export default function PostForm({initialPost, busy, postBtnTitle,onSubmit, rese
     const [displayMarkdownHint, setDisplayMarkdownHint] = useState(false);
 
     useEffect(() => {
-        setPostInfo({...initialPost})
-    }, [initialPost]);
+        if (initialPost?.thumbnail) {
+            setSelectedThumbnailURL(initialPost.thumbnail);
+        }
+        setPostInfo({...initialPost});
+        return() => {
+            if (resetAfterSubmit) {
+                resetForm();
+            }
+        }
+    }, [initialPost, resetAfterSubmit]);
 
     const handleChange = ({ target }) => {
         const { value, name, checked } = target;
@@ -101,7 +109,7 @@ export default function PostForm({initialPost, busy, postBtnTitle,onSubmit, rese
         if (!meta.trim()) {
             return updateNotification("error","Meta description is missing");
         }
-        const slug = title.toLowerCase().replace(/[^a-zA-Z ]/g, ' ').split(" ").filter(item => item.trim()).join("-");
+        const slug = title.toLowerCase().replace(/[^a-zA-Z ]/g, ' ').split(" ").filter(item => item.trim()).join("-");//ARRUMAR O PROBLEMA DO REGEX PARA PT BR
         const newTags = tags.split(",").map((item) => item.trim()).splice(0, 4);
 
         const formData = new FormData();
@@ -114,13 +122,13 @@ export default function PostForm({initialPost, busy, postBtnTitle,onSubmit, rese
         if (resetAfterSubmit) {
             resetForm();
         }
-        const resetForm = () => {
-            setPostInfo({...defaultPost});
-            localStorage.removeItem("blogPost");
-        }
+       
     };
-
-    const { title, thumbnail, featured, content, tags, meta } = postInfo;
+    const resetForm = () => {
+        setPostInfo({...defaultPost});
+        localStorage.removeItem("blogPost");
+    }
+    const { title, featured, content, tags, meta } = postInfo;
     return (
         <form onSubmit={handleSubmit} className="p-2 flex">
             <div className="w-9/12 h-screen space-y-3 flex flex-col">
