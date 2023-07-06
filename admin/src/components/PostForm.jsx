@@ -20,6 +20,7 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
     const [imageUploading, setImageUploading] = useState(false);
     const { updateNotification } = useNotification();
     const [displayMarkdownHint, setDisplayMarkdownHint] = useState(false);
+    const [showDeviceView, setShowDeviceView] = useState(false);
 
     useEffect(() => {
         if (initialPost?.thumbnail) {
@@ -130,6 +131,7 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
     }
     const { title, featured, content, tags, meta } = postInfo;
     return (
+        <>
         <form onSubmit={handleSubmit} className="p-2 flex">
             <div className="w-9/12 h-screen space-y-3 flex flex-col">
                 {/* title and submit */}
@@ -227,5 +229,7 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
 
             </div >
         </form >
+        <DeviceView visible={showDeviceView}></DeviceView>
+        </>
     );
 }
