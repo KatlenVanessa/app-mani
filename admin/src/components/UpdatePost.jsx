@@ -13,13 +13,13 @@ export default function UpdatePost() {
     const [busy, setBusy] = useState(false);
 
     const fetchPost = async () => {
-        console.log(slug);
+        //console.log(slug);
         const { error, post } = await getPost(slug)
         if (error) {
             setNotFound(true);
             return updateNotification('error', error);
         }
-        console.log(post);
+        //console.log(post);
         setPostInfo({ ...post, tags: post.tags?.join(', ') });
     };
 

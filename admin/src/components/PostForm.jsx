@@ -56,7 +56,6 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
         if (name === 'tags') {
             const newTags = tags.split(",");//Decidir se vai ser ', ' ou ','
             if (newTags.length > 4) {
-                console.log("test1");
                 updateNotification('warning', 'Only first four tags will be selected');
                 console.log("Only first four tags will be selected");
             };
@@ -122,6 +121,9 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
         }
 
         onSubmit(formData);
+        if (resetAfterSubmit) {
+            resetForm();
+        }
 
     };
     const resetForm = () => {
