@@ -20,8 +20,7 @@ const SearchForm = () => {
     };
 
     const handleKeyDown = (e) => {
-        if(e.key === 'Escape'){
-            setQuery('');
+        if(e.key === 'Escape'){ 
             resetSearch();
         };
     };
@@ -30,7 +29,6 @@ const SearchForm = () => {
     return (
         <form className='relative' onSubmit={handleSubmit}>
             <input value={query}
-            onKeyDown={handleKeyDown}
                 onChange={({ target }) => setQuery(target.value)}
                 placeholder='Search...'
                 className='border border-gray-500 outline-none rounded p-1 focus:ring-1 ring-blue-500 w-56' />

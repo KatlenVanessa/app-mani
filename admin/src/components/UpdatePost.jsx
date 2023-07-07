@@ -25,7 +25,7 @@ export default function UpdatePost() {
 
     useEffect(() => {
         fetchPost();
-    }, []);
+    });
 
     const handleSubmit = async (data) => {
         setBusy(true);
@@ -41,6 +41,6 @@ export default function UpdatePost() {
         return <NotFound></NotFound>;
     }
     return (
-        <PostForm onSubmit={handleSubmit} initialPost={postInfo} busy={busy} postBtnTitle="Update"></PostForm>
+        <PostForm onSubmit={handleSubmit} initialPost={postInfo} busy={busy} postBtnTitle="Update" resetAfterSubmit></PostForm>
     )
 }

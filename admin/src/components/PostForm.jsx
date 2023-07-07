@@ -3,6 +3,7 @@ import { ImSpinner11, ImEye, ImFilesEmpty, ImFilePicture, ImSpinner3 } from 'rea
 import { uploadImage } from "../api/post";
 import { useNotification } from "../context/NotificationProvider";
 import MarkdownHint from "./MarkdownHint";
+import DeviceView from "./DeviceView";
 
 export const defaultPost = {
     title: "",
@@ -23,10 +24,11 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
     const [showDeviceView, setShowDeviceView] = useState(false);
 
     useEffect(() => {
-        if (initialPost?.thumbnail) {
-            setSelectedThumbnailURL(initialPost.thumbnail);
+        if (initialPost) {
+            setPostInfo({...initialPost});
+            setSelectedThumbnailURL(initialPost?.thumbnail);
         }
-        setPostInfo({...initialPost});
+        
         return() => {
             if (resetAfterSubmit) {
                 resetForm();
@@ -85,7 +87,7 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
         const { error, image } = await uploadImage(formData);
         setImageUploading(false);
         if (error) {
-            return console.log(error);
+            return updateNotification("Error", error);
         }
         setImageUrlToCopy(image);
     };
@@ -120,10 +122,7 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
         }
 
         onSubmit(formData);
-        if (resetAfterSubmit) {
-            resetForm();
-        }
-       
+
     };
     const resetForm = () => {
         setPostInfo({...defaultPost});
@@ -139,8 +138,8 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
                     <h1 className="text-x1 font-semibold text-gray-700">Crie uma nova postagem</h1>
 
                     <div className="flex items-center space-x-5">
-                        <button type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImSpinner11></ImSpinner11><span>Reset</span></button>
-                        <button type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImEye></ImEye><span>View</span></button>
+                        <button onClick={() => resetForm} type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImSpinner11></ImSpinner11><span>Reset</span></button>
+                        <button onClick={() => setShowDeviceView(true)} type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImEye></ImEye><span>View</span></button>
                         <button className="h-10 w-36 px-5 hover:ring-1 bg-blue-500 rounded text-white hover:bg-blue-500 hover:bg-transparent ring-blue-500 transition">{busy ? <ImSpinner3 className="animate-spin mx-auto text-xl"/> : (postBtnTitle)}</button>
                     </div>
                 </div>
@@ -229,7 +228,7 @@ export default function PostForm({initialPost, busy, postBtnTitle, resetAfterSub
 
             </div >
         </form >
-        <DeviceView visible={showDeviceView}></DeviceView>
+        <DeviceView title={title} content={content} thumbnail={selectedThumbnailURL} visible={showDeviceView} onClose={() => {setShowDeviceView(false)}}></DeviceView>
         </>
     );
 }

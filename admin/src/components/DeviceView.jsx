@@ -1,16 +1,26 @@
 import React from 'react';
 import Markdown from 'markdown-to-jsx'
-const DeviceView = ({ visible,  thumbnail, title, content }) => {
-    if (visible) {
+const DeviceView = ({ visible, thumbnail, title, content, onClose }) => {
+    if (!visible) {
         return null;
     };
+
+    const handleOnClick = (e) => {
+        if (e.target.id === "container") {
+            onClose();
+        }
+    }
+
     return (
-        <div className='bg-gray-500 bg-opacity-50 fixed inset-0 backdrop-blur-sm flex justify-center items-center'>
+        <div id='container' onClick={handleOnClick} className='bg-gray-500 bg-opacity-50 fixed inset-0 backdrop-blur-sm flex justify-center items-center'>
             <div className='bg-white w w-device-width h-device-height rounded overflow-auto'>
                 <img src={thumbnail} className='aspect-video' alt=''></img>
                 <div className='px-2'>
                     <h1 className='font-semibold text-gray-700 py-2 text-x1'>{title}
                     </h1>
+                    <div className='prose prose-sm'>
+
+                    </div>
                     <Markdown>{content}
                     </Markdown>
                 </div>
