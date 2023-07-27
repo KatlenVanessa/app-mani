@@ -22,6 +22,7 @@ const data = [{
 ];
 
 const width = (Dimensions.get('window').width) - 20;
+let currentSlideIndex = 0;
 
 export default function App() {
 
@@ -30,7 +31,8 @@ export default function App() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
-    setVisibleSlideIndex(viewableItems[0]?.index || 0);
+    currentSlideIndex = viewableItems[0]?.index || 0
+    setVisibleSlideIndex(currentSlideIndex);
   });
 
   const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50, });
@@ -57,6 +59,14 @@ export default function App() {
       handleScrollTo(length - 2);
     }
 
+    const lastSlide = currentSlideIndex === length - 1
+    const firstSlide = currentSlideIndex === 0
+
+    if (lastSlide && length) {
+      setActiveSlideIndex(0);
+    } else if (firstSlide && length) { setActiveSlideIndex(length - 2); }
+    else { setActiveSlideIndex(currentSlideIndex - 1); }
+
   }, [visibleSlideIndex]);
 
   return (
@@ -70,7 +80,7 @@ export default function App() {
             return (
               <View
                 key={item.id}
-                style={{ width: 12, height: 12, borderRadius: 6, borderWidth: 2, marginLeft: 5, backgroundColor:  activeSlideIndex === index ? '#383838' : 'transparent' }}>
+                style={{ width: 12, height: 12, borderRadius: 6, borderWidth: 2, marginLeft: 5, backgroundColor: activeSlideIndex === index ? '#383838' : 'transparent' }}>
               </View>
             );
           })}
