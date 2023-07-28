@@ -10,7 +10,7 @@ const data = [{
   author: "Admin",
 }, {
   id: "1234",
-  thumbnail: "https://images.unsplash.com/photo-1682844924122-3e8d214a3662?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80",
+  thumbnail: "https://images.unsplash.com/photo-1645839078449-124db8a049fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80",
   title: "um garoto usando um chapéu de cowboy e macacao",
   author: "Admin",
 }, {
@@ -18,11 +18,17 @@ const data = [{
   thumbnail: "https://images.unsplash.com/photo-1682844924122-3e8d214a3662?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80",
   title: "cinco brinquedos de carros de corrida de cores variadas",
   author: "Admin",
+}, {
+  id: "123456",
+  thumbnail: "https://images.unsplash.com/photo-1645839078449-124db8a049fd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1332&q=80",
+  title: "um garoto usando um chapéu de cowboy e macacao",
+  author: "Admin",
 }
 ];
 
 const width = (Dimensions.get('window').width) - 20;
 let currentSlideIndex = 0;
+let intervalId = 0;
 
 export default function App() {
 
@@ -31,17 +37,42 @@ export default function App() {
   const [activeSlideIndex, setActiveSlideIndex] = useState(0);
 
   const onViewableItemsChanged = useRef(({ viewableItems }) => {
-    currentSlideIndex = viewableItems[0]?.index || 0
+    currentSlideIndex = viewableItems[0]?.index || 0;
+    //console.log("Current slide index: " + currentSlideIndex);
     setVisibleSlideIndex(currentSlideIndex);
   });
 
-  const viewabilityConfig = useRef({ viewAreaCoveragePercentThreshold: 50, });
+  const viewabilityConfig = useRef({
+    viewAreaCoveragePercentThreshold: 50,
+  });
 
   const flatList = useRef();
 
   const handleScrollTo = (index) => {
     flatList.current.scrollToIndex({ animated: false, index });
   }
+
+  const startSlider = () => {
+    if (currentSlideIndex <= dataToRender.length - 2) {
+      intervalId = setInterval(() => {
+        flatList.current.scrollToIndex({ animated: true, index: currentSlideIndex + 1 });
+      }, 4000);
+    } else {
+      pauseSlider();
+    }
+  };
+
+  const pauseSlider = () => {
+    clearInterval(intervalId);
+  };
+
+  useEffect(() => {
+    if (dataToRender.length && flatList.current) {
+      startSlider();
+    }
+  }, [dataToRender.length]);
+
+
   useEffect(() => {
     const newData = [[...data].pop(), ...data, [...data].shift()];
     setDataToRender([...newData]);
@@ -49,25 +80,20 @@ export default function App() {
 
   useEffect(() => {
     const length = dataToRender.length;
-    //reset slide to first
-    if (visibleSlideIndex === length - 1 && length) {
-      handleScrollTo(1);
+
+    // Calculate the active slide index based on the current slide index
+    let calculatedActiveSlideIndex = currentSlideIndex;
+    if (currentSlideIndex === 0) {
+      calculatedActiveSlideIndex = length - 3;
+    } else if (currentSlideIndex === length - 1) {
+      calculatedActiveSlideIndex = 0;
+    } else {
+      calculatedActiveSlideIndex = currentSlideIndex - 1;
     }
 
-    //reset slide to last
-    if (visibleSlideIndex === 0 && length) {
-      handleScrollTo(length - 2);
-    }
+    setActiveSlideIndex(calculatedActiveSlideIndex);
 
-    const lastSlide = currentSlideIndex === length - 1
-    const firstSlide = currentSlideIndex === 0
-
-    if (lastSlide && length) {
-      setActiveSlideIndex(0);
-    } else if (firstSlide && length) { setActiveSlideIndex(length - 2); }
-    else { setActiveSlideIndex(currentSlideIndex - 1); }
-
-  }, [visibleSlideIndex]);
+  }, [currentSlideIndex, dataToRender.length]);
 
   return (
     <View style={styles.container}>
@@ -77,10 +103,11 @@ export default function App() {
 
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {data.map((item, index) => {
+            const isActive = index === activeSlideIndex;
             return (
               <View
                 key={item.id}
-                style={{ width: 12, height: 12, borderRadius: 6, borderWidth: 2, marginLeft: 5, backgroundColor: activeSlideIndex === index ? '#383838' : 'transparent' }}>
+                style={{ width: 12, height: 12, borderRadius: 6, borderWidth: 2, marginLeft: 5, backgroundColor: isActive ? '#383838' : 'transparent' }}>
               </View>
             );
           })}
@@ -93,8 +120,8 @@ export default function App() {
         keyExtractor={(item, index) => item.id + index}
         horizontal={true}
         pagingEnabled
-        showsVerticalScrollIndicator={false}
-        initialScrollIndex={1}
+        showsHorizontalScrollIndicator={false}
+        //initialScrollIndex={1}
         getItemLayout={(_, index) => ({
           length: width,
           offset: width * index,
@@ -102,6 +129,8 @@ export default function App() {
         })}
         onViewableItemsChanged={onViewableItemsChanged.current}
         viewabilityConfig={viewabilityConfig.current}
+        onScrollBeginDrag={pauseSlider}
+        onScrollEndDrag={startSlider}
         renderItem={({ item }) => {
           return (
             <View>
