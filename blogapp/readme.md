@@ -1,1 +1,1 @@
-- sudo npm install — global expo-cli
+sudo npm install — global expo-cli
