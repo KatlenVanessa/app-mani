@@ -1,111 +1,79 @@
-import { StatusBar } from 'expo-status-bar';
-import { useRef } from 'react';
-import { useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import { StyleSheet, FlatList, View, Dimensions, Image, Text } from 'react-native';
+const width = Dimensions.get('window').width - 20;
 
-
-const width = (Dimensions.get('window').width) - 20;
-let currentSlideIndex = 0;
-let intervalId = 0;
-
-export default function App({ data, title }) {
-
-    const [dataToRender, setDataToRender] = useState([]);
-    const [visibleSlideIndex, setVisibleSlideIndex] = useState(0);
-    const [activeSlideIndex, setActiveSlideIndex] = useState(0);
-
-    const onViewableItemsChanged = useRef(({ viewableItems }) => {
-        currentSlideIndex = viewableItems[0]?.index || 0;
-        //console.log("Current slide index: " + currentSlideIndex);
-        setVisibleSlideIndex(currentSlideIndex);
-    });
-
-    const viewabilityConfig = useRef({
-        viewAreaCoveragePercentThreshold: 50,
-    });
-
-    const flatList = useRef();
-
-    const handleScrollTo = (index) => {
-        flatList.current.scrollToIndex({ animated: false, index });
-    }
+export default function Slider({ data }) {
+    const flatlistRef = useRef(null);
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     useEffect(() => {
-        const newData = [[...data].pop(), ...data, [...data].shift()];
-        setDataToRender([...newData]);
-    }, [data.length]);
+        // Create an interval to keep scrolling the FlatList automatically
+        const scrollInterval = setInterval(() => {
+            // Get the current index of the FlatList
+            const nextIndex = (currentIndex + 1) % data.length;
+            // Scroll to the next slide
+            flatlistRef.current.scrollToIndex({
+                index: nextIndex,
+                animated: true,
+            });
+            setCurrentIndex(nextIndex);
+        }, 3000); // Set the interval time in milliseconds (e.g., 3000ms = 3 seconds)
 
-    useEffect(() => {
-        const length = dataToRender.length;
+        // Clear the interval when the component unmounts to avoid memory leaks
+        return () => clearInterval(scrollInterval);
+    }, [currentIndex]);
 
-        // Calculate the active slide index based on the current slide index
-        let calculatedActiveSlideIndex = currentSlideIndex;
-        if (currentSlideIndex === 0) {
-            calculatedActiveSlideIndex = length - 3;
-        } else if (currentSlideIndex === length - 1) {
-            calculatedActiveSlideIndex = 0;
-        } else {
-            calculatedActiveSlideIndex = currentSlideIndex - 1;
-        }
-
-        setActiveSlideIndex(calculatedActiveSlideIndex);
-
-    }, [currentSlideIndex, dataToRender.length]);
+    const renderItem = ({ item }) => (
+        <View style={styles.slideContainer}>
+            <Image style={styles.slideImage} source={{ uri: item.thumbnail }} />
+            <Text numberOfLines={2} style={styles.slideAuthor}>{item.title}</Text>
+        </View>
+    );
 
     return (
         <View style={styles.container}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 5, }}>
-
-                <Text style={{ fontWeight: '700', color: '#383838', fontSize: 22 }}>{title}</Text>
-
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    {data.map((item, index) => {
-                        const isActive = index === activeSlideIndex;
-                        return (
-                            <View
-                                key={item.id}
-                                style={{ width: 12, height: 12, borderRadius: 6, borderWidth: 2, marginLeft: 5, backgroundColor: isActive ? '#383838' : 'transparent' }}>
-                            </View>
-                        );
-                    })}
-                </View>
+            <View>
+                <Text style={styles.slideTitle}>Destaques</Text>
             </View>
-
             <FlatList
-                ref={flatList}
-                data={dataToRender}
-                keyExtractor={(item, index) => item.id + index}
-                horizontal={true}
-                pagingEnabled
+                ref={flatlistRef}
+                horizontal
+                data={data}
+                renderItem={renderItem}
+                keyExtractor={(item) => item.id}
+                snapToInterval={width}
+                decelerationRate="fast"
                 showsHorizontalScrollIndicator={false}
-                //initialScrollIndex={1}
-                getItemLayout={(_, index) => ({
-                    length: width,
-                    offset: width * index,
-                    index,
-                })}
-                onViewableItemsChanged={onViewableItemsChanged.current}
-                viewabilityConfig={viewabilityConfig.current}
-                renderItem={({ item }) => {
-                    return (
-                        <View>
-                            <Image source={{ uri: item.thumbnail }} style={{ width, height: width / 1.7, borderRadius: 7 }}></Image>
-                            <View style={{ width }}>
-                                <Text style={{ fontWeight: '700', color: '#383838', fontSize: 22 }}>
-                                    {item.title}
-                                </Text>
-                            </View>
-                        </View>);
-                }}>
-            </FlatList>
+            />
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        alignSelf: "center",
+        alignSelf: 'center',
         width,
         paddingTop: 50,
     },
+    slideContainer: {
+        width,
+        padding: 10,
+        alignItems: 'center',
+    },
+    slideImage: {
+        width: width - 20,
+        height: 200,
+        borderRadius: 8,
+    },
+    slideAuthor: {
+        marginTop: 10,
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    slideTitle: {
+        marginLeft: 15,
+        fontSize: 22,
+        fontWeight: 'bold',
+    },
 });
+
