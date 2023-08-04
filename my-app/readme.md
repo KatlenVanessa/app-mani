@@ -1,1 +1,2 @@
-sudo npm install — global expo-cli
+npm install — global expo-cli
+npx expo install expo-constants
