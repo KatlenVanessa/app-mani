@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from 'react';
 import { StyleSheet, FlatList, View, Dimensions, Image, Text } from 'react-native';
 import Slider from './app/components/Slider';
 import Separator from './app/components/Separator';
+import PostListItems from './app/components/PostListItems';
+import { getFeaturedPosts, getLatestPosts } from './app/components/api/post';
 
 const data = [
   {
@@ -34,28 +36,58 @@ const data = [
   },
 ];
 
+let pageNo = 0;
+const limit = 10;
 export default function App() {
+  const [featuredPosts, setFeaturedPosts] = useState([]);
+  const [latestPosts, setLatestPosts] = useState([]);
+
+  const fetchFeaturedPosts = async () => {
+    const {error, posts} = await getFeaturedPosts();
+    if (error) return console.error(error);
+    
+    setFeaturedPosts(posts); 
+  }
+
+  const fetchLatestPosts = async () => {
+    const {error, posts} = await getLatestPosts(limit, pageNo);
+    if (error) return console.error(error);
+    
+    setLatestPosts(posts); 
+  }
+
+  useEffect(() => {
+    fetchFeaturedPosts();
+    fetchLatestPosts();
+
+  }, []);
+
   //return <Slider data={data} />;
   const ListHeaderComponent = () => {
     return (
       <View>
-        <Slider data={data} />
+        {featuredPosts.length ? (<Slider data={featuredPosts} />) : null}
         <View style={{ marginTop: 15 }}>
           <Separator ></Separator>
           <Text style={{ fontWeight: '700', color: '#383838', fontSize: 22, marginTop: 15 }}>Novos Artigos</Text>
-
         </View>
       </View>
     );
   };
   return (
     <FlatList
-      data={data}
+      data={latestPosts}
       keyExtractor={(item) => item.id}
-      contentContainerStyle={{paddingHorizontal: 10}}
+      contentContainerStyle={{ paddingHorizontal: 10 , paddingBottom: 20}}
       ListHeaderComponent={ListHeaderComponent}
+      ItemSeparatorComponent={<Separator width='90%' style={{marginTop: 15}}></Separator>}
       renderItem={({ item }) => {
-        return <Text>{item.title}</Text>;
-      }} />
+        return (
+          <View style={{ marginTop: 15}}>
+            <PostListItems post={item}></PostListItems>
+          </View>
+        );
+      }}
+    />
   );
 }
