@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
     container: {
         alignSelf: 'center',
         width,
-        paddingTop: 50,
     },
     slideContainer: {
         width,

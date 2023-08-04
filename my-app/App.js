@@ -4,6 +4,7 @@ import Slider from './app/components/Slider';
 import Separator from './app/components/Separator';
 import PostListItems from './app/components/PostListItems';
 import { getFeaturedPosts, getLatestPosts } from './app/components/api/post';
+import Constants from 'expo-constants';
 
 const data = [
   {
@@ -65,7 +66,7 @@ export default function App() {
   //return <Slider data={data} />;
   const ListHeaderComponent = () => {
     return (
-      <View>
+      <View style={{ paddingTop: Constants.statusBarHeight }}>
         {featuredPosts.length ? (<Slider data={featuredPosts} />) : null}
         <View style={{ marginTop: 15 }}>
           <Separator ></Separator>
