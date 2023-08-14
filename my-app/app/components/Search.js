@@ -21,7 +21,7 @@ const Search = () => {
       return console.log(error);
     }
     console.log("posts length: ", posts.length);
-    if (!posts.length) { return setNotFound(false); }
+    if (!posts.length) { return setNotFound(true); }
 
     setResults([...posts]);
   };
