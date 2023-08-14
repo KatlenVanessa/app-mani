@@ -20,7 +20,7 @@ const MY_WEBSITE_LINK = "myblog.com/blog";
 
 const { width } = Dimensions.get("window");
 
-const PostDetail = ({ route }) => {
+const PostDetail = ({ route, navigation }) => {
   const post = route.params?.post;
 
   const rules = {
@@ -37,7 +37,7 @@ const PostDetail = ({ route }) => {
       if (error) {
         return console.log(error);
       }
-      navigation.navigate("PostDetail", { post });
+      navigation.push("PostDetail", { post });
   }
 
   const handleOnLinkPress = async (url) => {

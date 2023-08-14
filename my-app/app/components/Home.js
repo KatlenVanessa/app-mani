@@ -3,7 +3,7 @@ import { StyleSheet, FlatList, View, Dimensions, Image, Text } from 'react-nativ
 import Slider from './Slider';
 import Separator from './Separator';
 import PostListItems from './PostListItems';
-import { getFeaturedPosts, getLatestPosts, getSinglePost } from "../api/post"
+import { getFeaturedPosts, getLatestPosts, getSinglePost } from "../api/post";
 import Constants from 'expo-constants';
 
 const data = [
@@ -97,11 +97,14 @@ export default function Home({ navigation }) {
   };
 
   const fetchSinglePost = async (slug) => {
-    const { error, post } = await getSinglePost(slug);
-    if (error) {
-      console.log(error);
-    };
-    navigation.navigate('PostDetail', { post });
+    const {error, post } = await getSinglePost(slug);
+
+    if (error) console.error(error);
+    navigation.navigate('PostDetail', { post });;
+  };
+
+  const handlePostPress = (post) => {
+    navigation.navigate('PostDetail', {});
   };
 
   const renderItem = ({ item }) => {

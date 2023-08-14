@@ -20,9 +20,9 @@ const Search = () => {
     if (error) {
       return console.log(error);
     }
-    if (!posts.length) {
-      return setNotFound(false);
-    }
+    console.log("posts length: ", posts.length);
+    if (!posts.length) { return setNotFound(false); }
+
     setResults([...posts]);
   };
 
@@ -31,7 +31,7 @@ const Search = () => {
     if (error) {
       return console.log(error);
     }
-    navigation.push("PostDetail", { post });
+    navigation.navigate("PostDetail", { post });
   };
 
   return (
@@ -45,7 +45,7 @@ const Search = () => {
       ></TextInput>
 
       <ScrollView contentContainerStyle={{ flex: 1 }}>
-        { notFound ? (
+        {notFound ? (
           <Text
             style={{
               fontWeight: "bold",

@@ -11,6 +11,7 @@ const RelatedPosts = ({ postId, onPostPress }) => {
     if (error) {
       console.log(error);
     }
+
     setPosts([...posts]);
   };
 
@@ -22,7 +23,7 @@ const RelatedPosts = ({ postId, onPostPress }) => {
     return (
       <View style={styles.container} key={post.id}>
         <PostListItem
-          onPress={() => onPostPress(post)}
+          onPress={() => onPostPress(post.slug)}
           post={post}
         ></PostListItem>
       </View>
