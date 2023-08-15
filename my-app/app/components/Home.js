@@ -81,6 +81,11 @@ export default function Home({ navigation }) {
     fetchFeaturedPosts();
     fetchLatestPosts();
 
+    return () => {
+      pageNo = 0;
+      setReachedToEnd(false);
+    };
+
   }, []);
 
   //return <Slider data={data} />;
@@ -97,7 +102,7 @@ export default function Home({ navigation }) {
   };
 
   const fetchSinglePost = async (slug) => {
-    const {error, post } = await getSinglePost(slug);
+    const { error, post } = await getSinglePost(slug);
 
     if (error) console.error(error);
     navigation.navigate('PostDetail', { post });;
@@ -126,7 +131,7 @@ export default function Home({ navigation }) {
       ListHeaderComponent={ListHeaderComponent}
       ItemSeparatorComponent={ItemSeparatorComponent}
       renderItem={renderItem}
-      onEndReached={async () => await fetchMorePosts()}
+      onEndReached={fetchMorePosts}
       onEndReachedThreshold={0}
       ListFooterComponent={() => {
         return reachedToEnd ? (

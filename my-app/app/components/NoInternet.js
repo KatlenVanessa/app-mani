@@ -17,7 +17,7 @@ const NoInternet = ({ onRefreshPress }) => {
       >
         <Feather name="refresh-cw" size={18} color={black}>
           <Text style={{ fontSize: 18, paddingVertical: 5, marginLeft: 5 }}>
-            Tente Novamente
+            Ten Novamente
           </Text>
         </Feather>
       </Pressable>
