@@ -24,6 +24,7 @@ const Search = () => {
     if (!posts.length) { return setNotFound(true); }
 
     setResults([...posts]);
+    setNotFound(false);
   };
 
   const handlePostPress = async (slug) => {
