@@ -11,8 +11,9 @@ const CUSTOM_THEME = {
 
 const App = () => {
   const [noInternet, setNoInternet] = useState(false);
+  console.log(netInfo);
   const netInfo = useNetInfo();
-
+  
   const fetchNetInfo = () => {
     const { isConnected, isInternetReachable } = netInfo;
     if (isConnected === false && isInternetReachable === false) {
@@ -27,7 +28,7 @@ const App = () => {
   }, [netInfo]);
 
   if (noInternet) {
-    return <noInternet onRefreshPress={fetchNetInfo}></noInternet>;
+    return <NoInternet onRefreshPress={fetchNetInfo}></NoInternet>;
   }
 
   return (

@@ -1,7 +1,6 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
 import { Feather } from "@expo/vector-icons";
-import { useNetInfo } from "@react-native-community/netinfo";
 import { StyleSheet } from "react-native";
 
 const NoInternet = ({ onRefreshPress }) => {
@@ -15,9 +14,9 @@ const NoInternet = ({ onRefreshPress }) => {
         onPress={onRefreshPress}
         style={{ flexDirection: "row", alignItems: "center" }}
       >
-        <Feather name="refresh-cw" size={18} color={black}>
+        <Feather name="refresh-cw" size={18} color="#383838">
           <Text style={{ fontSize: 18, paddingVertical: 5, marginLeft: 5 }}>
-            Ten Novamente
+            Tente Novamente
           </Text>
         </Feather>
       </Pressable>

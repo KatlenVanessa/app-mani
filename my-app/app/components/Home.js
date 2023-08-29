@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { StyleSheet, FlatList, View, Dimensions, Image, Text } from 'react-native';
 import Slider from './Slider';
 import Separator from './Separator';
 import PostListItems from './PostListItems';
-import { getFeaturedPosts, getLatestPosts, getSinglePost } from "../api/post";
+import { getFeaturedPosts, getLatestPosts, getSinglePost } from "../api/post"
 import Constants from 'expo-constants';
 
 const data = [
@@ -89,7 +89,7 @@ export default function Home({ navigation }) {
   }, []);
 
   //return <Slider data={data} />;
-  const ListHeaderComponent = () => {
+  const ListHeaderComponent = useCallback(() => {
     return (
       <View style={{ paddingTop: Constants.statusBarHeight }}>
         {featuredPosts.length ? (<Slider data={featuredPosts} />) : null}
@@ -99,7 +99,7 @@ export default function Home({ navigation }) {
         </View>
       </View>
     );
-  };
+  }, [featuredPosts]);
 
   const fetchSinglePost = async (slug) => {
     const { error, post } = await getSinglePost(slug);
@@ -131,7 +131,7 @@ export default function Home({ navigation }) {
       ListHeaderComponent={ListHeaderComponent}
       ItemSeparatorComponent={ItemSeparatorComponent}
       renderItem={renderItem}
-      onEndReached={fetchMorePosts}
+      onEndReached={fetchMorePosts} //onEndReached={async () => await fetchMorePosts()}
       onEndReachedThreshold={0}
       ListFooterComponent={() => {
         return reachedToEnd ? (

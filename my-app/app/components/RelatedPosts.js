@@ -11,7 +11,6 @@ const RelatedPosts = ({ postId, onPostPress }) => {
     if (error) {
       console.log(error);
     }
-
     setPosts([...posts]);
   };
 

@@ -20,9 +20,9 @@ const Search = () => {
     if (error) {
       return console.log(error);
     }
-    console.log("posts length: ", posts.length);
-    if (!posts.length) { return setNotFound(true); }
-
+    if (!posts.length) {
+      return setNotFound(true);
+    }
     setResults([...posts]);
     setNotFound(false);
   };
