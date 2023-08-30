@@ -25,14 +25,15 @@ export default function UpdatePost() {
 
     useEffect(() => {
         fetchPost();
-    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleSubmit = async (data) => {
         setBusy(true);
         const { error, post } = await updatePost(postInfo.id, data);
         setBusy(false);
         if (error) {
-            return updateNotification('error', error);
+            return updateNotification(error);
         }
         setPostInfo({...post, tags: post.tags?.join(', ') });
     };

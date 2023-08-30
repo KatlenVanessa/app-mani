@@ -11,7 +11,7 @@ const CUSTOM_THEME = {
 
 const App = () => {
   const [noInternet, setNoInternet] = useState(false);
-  console.log(netInfo);
+  //console.log(netInfo);
   const netInfo = useNetInfo();
   
   const fetchNetInfo = () => {
