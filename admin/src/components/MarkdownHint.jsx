@@ -11,7 +11,7 @@ const mdRules = [
         title: "Image", rule: "![image alt](http://image_url.com)"
     },
     {
-        title: "Link", rule: "[Link Text](http://your_link.com)"
+        title: "Link", rule: "[Link Text](https://your_link.com)"
     },
 ];
 

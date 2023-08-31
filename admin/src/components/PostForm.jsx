@@ -4,6 +4,7 @@ import { uploadImage } from "../api/post";
 import { useNotification } from "../context/NotificationProvider";
 import MarkdownHint from "./MarkdownHint";
 import DeviceView from "./DeviceView";
+import Markdown from 'markdown-to-jsx'
 
 export const defaultPost = {
     title: "",
@@ -166,11 +167,13 @@ export default function PostForm({ initialPost, busy, postBtnTitle, resetAfterSu
                     </div>
                     {/* image input */}
                     <div className="flex space-x-2">
+                        <div></div>
+
                         <div>
                             <input onChange={handleImageUpload} id="image-input" type="file" hidden></input>
                             <label htmlFor="image-input" className="flex items-center space-x-2 px-3 ring-1 ring-gray-700 rounded h-10 text-gray-700  hover:text-white hover:bg-gray-700 transition cursor-pointer">
                                 <span>
-                                    Place image
+                                    Escolher Imagem
                                 </span>
                                 {!imageUploading ? (<ImFilePicture></ImFilePicture>) : (<ImSpinner3 className="animate-spin"></ImSpinner3>)}
                             </label>
@@ -187,9 +190,9 @@ export default function PostForm({ initialPost, busy, postBtnTitle, resetAfterSu
                             </button>
                         </div>)}
                     </div>
-
+                    {/* text input */}
                     <div>
-                        <textarea value={content} onChange={handleChange} onFocus={() => setDisplayMarkdownHint(true)} name="content" className='resize-none outline-none focus:ring-1 rounded p-2 w-full font-semibold flex-1 font-mono tracking-wide text-lg' placeholder="## Markdown"></textarea>
+                        <textarea value={content} onChange={handleChange} onFocus={() => setDisplayMarkdownHint(true)} name="content" className='resize-none outline-none focus:ring-1 rounded p-2 w-full font-semibold flex-1 font-mono tracking-wide text-lg h-80' placeholder="Conteudo da postagem"></textarea>
                     </div>
 
                     {/* tags input */}
