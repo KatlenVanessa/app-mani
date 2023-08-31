@@ -4,7 +4,6 @@ import { uploadImage } from "../api/post";
 import { useNotification } from "../context/NotificationProvider";
 import MarkdownHint from "./MarkdownHint";
 import DeviceView from "./DeviceView";
-import Markdown from 'markdown-to-jsx'
 
 export const defaultPost = {
     title: "",

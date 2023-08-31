@@ -47,10 +47,14 @@ const PostDetail = ({ route, navigation }) => {
       if (!slug) {
         return false;
       }
-      handleSinglePostFetch(slug)
+      const {error, post} = await getSinglePost(slug);
+
+      if (error) {
+        return console.error(error);
+      }
+      navigation.push("PostDetails", {post});
       return false;
     }
-
     const res = await Linking.canOpenURL(url);
     if (res) {
       Linking.canOpenURL(url);
