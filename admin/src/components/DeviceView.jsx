@@ -40,11 +40,9 @@ const DeviceView = ({ visible, thumbnail, title, content, onClose }) => {
     position: 'absolute',
     top: '10px',
     right: '10px',
-    backgroundColor: 'transparent',
-    border: 'none',
     cursor: 'pointer',
     fontSize: '1.5rem',
-    color: 'gray', // Cor do ícone do botão de fechar
+    color: 'yellow', // Cor do ícone do botão de fechar
   };
 
   return (

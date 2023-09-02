@@ -28,7 +28,7 @@ function App() {
       </div>
 
       {/* content section */}
-      <div className="flex-1 min-h-screen bg-purple-100">
+      <div className="flex-1 min-h-screen bg-purple-50">
         <div className="sticky top-0">
           <div className="flex item-center p-2 space-x-2">
             <button onClick={toggleNav}>
