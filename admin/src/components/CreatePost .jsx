@@ -30,7 +30,7 @@ const CreatePost = () => {
     }, []);
 
     return (
-        <PostForm onSubmit={handleSubmit} initialPost={postInfo} busy={busy} postBtnTitle="Post" resetAfterSubmit={resetAfterSubmit}></PostForm>
+        <PostForm onSubmit={handleSubmit} initialPost={postInfo} busy={busy} postBtnTitle="Postar" resetAfterSubmit={resetAfterSubmit}></PostForm>
     );
 }
 

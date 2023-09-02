@@ -143,8 +143,8 @@ export default function PostForm({ initialPost, busy, postBtnTitle, resetAfterSu
                         <h1 className="text-x1 font-semibold text-gray-700">Crie uma nova postagem</h1>
 
                         <div className="flex items-center space-x-5">
-                            <button onClick={() => resetForm()} type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImSpinner11></ImSpinner11><span>Reset</span></button>
-                            <button onClick={() => setShowDeviceView(true)} type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImEye></ImEye><span>View</span></button>
+                            <button onClick={() => resetForm()} type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImSpinner11></ImSpinner11><span>Resetar</span></button>
+                            <button onClick={() => setShowDeviceView(true)} type="button" className="flex items-center space-x-2 px-3 ring-1 ring-blue-500 rounded h-10 text-blue-500 hover:text-white hover:bg-blue-500 transition"><ImEye></ImEye><span>Visualizar</span></button>
                             <button className="h-10 w-36 px-5 hover:ring-1 bg-blue-500 rounded text-white hover:bg-blue-500 hover:bg-transparent ring-blue-500 transition">{busy ? <ImSpinner3 className="animate-spin mx-auto text-xl" /> : (postBtnTitle)}</button>
                         </div>
                     </div>
@@ -185,7 +185,7 @@ export default function PostForm({ initialPost, busy, postBtnTitle, resetAfterSu
                                 disabled></input>
                             <button onClick={handleOnCopy} type="button" className="text-xs flex flex-col items-center justify-center p-1 self-stretch bg-gray-700 text-white">
                                 <ImFilesEmpty></ImFilesEmpty>
-                                copy
+                                Copiar
                             </button>
                         </div>)}
                     </div>
@@ -219,8 +219,8 @@ export default function PostForm({ initialPost, busy, postBtnTitle, resetAfterSu
                                 </img>
                             ) : (
                                 <div className="border border-dashed border-gray-500 aspect-video text-gray-500 flex flex-col justify-center items-center">
-                                    <span>Select Thumbnail</span>
-                                    <span className="text-xs">Recommended</span>
+                                    <span>Selecionar Thumbnail</span>
+                                    <span className="text-xs">Recomendado</span>
                                     <span className="text-xs">1280 * 720</span>
 
                                 </div>)}

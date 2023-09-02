@@ -15,9 +15,6 @@ import RelatedPosts from "./RelatedPosts";
 import Separator from "./Separator";
 import { getSinglePost } from "../api/post";
 
-
-const MY_WEBSITE_LINK = "myblog.com/blog";
-
 const { width } = Dimensions.get("window");
 
 const PostDetail = ({ route, navigation }) => {
@@ -34,11 +31,11 @@ const PostDetail = ({ route, navigation }) => {
   const handleSinglePostFetch = async (slug) => {
     const { error, post } = await getSinglePost(slug);
 
-      if (error) {
-        return console.log(error);
-      }
-      navigation.push("PostDetail", { post });
-  }
+    if (error) {
+      return console.log(error);
+    }
+    navigation.push("PostDetail", { post });
+  };
 
   const handleOnLinkPress = async (url) => {
     try {
@@ -63,7 +60,8 @@ const PostDetail = ({ route, navigation }) => {
     <ScrollView style={styles.container}>
       <Image
         source={getImage(thumbnail)}
-        style={{ width, height: width / 1.7 }}
+        style={{ width: "100%", aspectRatio: 16 / 9 }} // 16:9 é uma proporção de exemplo, você pode ajustá-la
+        resizeMode="cover" // Pode usar 'contain' se preferir manter a imagem completamente visível
       ></Image>
       <View style={{ padding: 10 }}>
         <Text
@@ -102,10 +100,13 @@ const PostDetail = ({ route, navigation }) => {
             ))}
           </View>
         </View>
-        <Markdown 
-        //rules={rules} 
-        style={styles}
-        onLinkPress={handleOnLinkPress}>{content}</Markdown>
+        <Markdown
+          //rules={rules}
+          style={styles}
+          onLinkPress={handleOnLinkPress}
+        >
+          {content}
+        </Markdown>
       </View>
 
       <View style={{ padding: 10 }}>
@@ -119,7 +120,10 @@ const PostDetail = ({ route, navigation }) => {
           Artigos Relacionados
         </Text>
         <Separator width="100%"></Separator>
-        <RelatedPosts postId={post.id}  onPostPress={handleSinglePostFetch}></RelatedPosts>
+        <RelatedPosts
+          postId={post.id}
+          onPostPress={handleSinglePostFetch}
+        ></RelatedPosts>
       </View>
     </ScrollView>
   );

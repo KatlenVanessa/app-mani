@@ -42,6 +42,6 @@ export default function UpdatePost() {
         return <NotFound></NotFound>;
     }
     return (
-        <PostForm onSubmit={handleSubmit} initialPost={postInfo} busy={busy} postBtnTitle="Update" resetAfterSubmit></PostForm>
+        <PostForm onSubmit={handleSubmit} initialPost={postInfo} busy={busy} postBtnTitle="Atualizar" resetAfterSubmit></PostForm>
     )
 }
