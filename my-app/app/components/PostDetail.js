@@ -41,25 +41,10 @@ const PostDetail = ({ route, navigation }) => {
   }
 
   const handleOnLinkPress = async (url) => {
-    if (url.includes(MY_WEBSITE_LINK)) {
-      const slug = url.split(MY_WEBSITE_LINK + "/")[1];
-
-      if (!slug) {
-        return false;
-      }
-      const {error, post} = await getSinglePost(slug);
-
-      if (error) {
-        return console.error(error);
-      }
-      navigation.push("PostDetails", {post});
-      return false;
-    }
-    const res = await Linking.canOpenURL(url);
-    if (res) {
-      Linking.canOpenURL(url);
-    } else {
-      Alert.alert("Invalid URL", "Não podemos abrir um link quebrado");
+    try {
+      await Linking.openURL(url);
+    } catch (error) {
+      Alert.alert("Erro ao abrir o link", "Não foi possível abrir a URL");
     }
   };
 
@@ -120,9 +105,7 @@ const PostDetail = ({ route, navigation }) => {
         <Markdown 
         //rules={rules} 
         style={styles}
-        onLinkPress={handleOnLinkPress}>
-          {content}
-        </Markdown>
+        onLinkPress={handleOnLinkPress}>{content}</Markdown>
       </View>
 
       <View style={{ padding: 10 }}>
