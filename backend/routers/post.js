@@ -2,45 +2,52 @@ const router = require("express").Router();
 
 const multer = require("../middlewares/multer");
 
-const { createPost, deletePost, updatePost, getPost, getFeaturedPosts, getPosts, searchPost, getRelatedPosts, uploadImage } = require("../controllers/post");
+const {
+  createPost,
+  deletePost,
+  updatePost,
+  getPost,
+  getFeaturedPosts,
+  getPosts,
+  searchPost,
+  getRelatedPosts,
+  uploadImage,
+} = require("../controllers/post");
 
-const {postValidator, validate} = require("../middlewares/postValidator");
+const { postValidator, validate } = require("../middlewares/postValidator");
 
-const {parseData} = require("../middlewares/index");
+const { parseData } = require("../middlewares/index");
 
+router.post(
+  "/create",
+  multer.single("thumbnail"),
+  parseData,
+  postValidator,
+  validate,
+  createPost
+);
 
-// router.post("/create", 
-// multer.single("thumbnail"),
-// parseData,
-// postValidator, 
-// validate,  
-// createPost );
+router.put(
+  "/:postId",
+  multer.single("thumbnail"),
+  parseData,
+  postValidator,
+  validate,
+  updatePost
+);
 
-// router.put("/:postId", 
-// multer.single("thumbnail"),
-// parseData,
-// postValidator, 
-// validate,  
-// updatePost );
+router.delete("/:postId", deletePost);
 
-// router.delete('/:postId', deletePost); 
+router.get("/single/:slug", getPost);
 
-router.get('/single/:slug', getPost); 
+router.get("/featured-posts", getFeaturedPosts);
 
-router.get('/featured-posts', getFeaturedPosts); 
+router.get("/posts", getPosts);
 
-router.get('/posts',getPosts);
+router.get("/search", searchPost);
 
-router.get('/search',searchPost);
+router.get("/related-posts/:postId", getRelatedPosts);
 
-router.get('/related-posts/:postId',getRelatedPosts);
-
-// router.post(
-//     "/upload-image",
-//     multer.single("image"),
-//     uploadImage
-// );
+router.post("/upload-image", multer.single("image"), uploadImage);
 
 module.exports = router;
-
-  

@@ -122,6 +122,7 @@ exports.updatePost = async (req, res) => {
     post.slug = slug;
     post.author = author;
     post.tags = tags;
+    post.featured = featured;
 
     if (featured) {
         await addToFeaturedPost(postId);
