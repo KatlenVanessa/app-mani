@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { View, StyleSheet, TextInput, ScrollView, Text } from "react-native";
 import Constants from "expo-constants";
 import { getSinglePost, searchPosts } from "../api/post";
-import PostListItems from "./PostListItems";
+import PostListItemsSearch from "./PostListItemsSearch";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
+import { AntDesign } from "@expo/vector-icons";
+import Separator from "./Separator";
+
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -45,6 +48,7 @@ const Search = () => {
         value={query}
         onChangeText={(text) => setQuery(text)}
         placeholder="Buscar.."
+        placeholderTextColor="#979797"
         style={[styles.searchInput, { width: wp("90%") }]} // Defina a largura responsiva aqui
         onSubmitEditing={handleOnSubmit}
       ></TextInput>
@@ -66,11 +70,12 @@ const Search = () => {
           results.map((post) => {
             return (
               <View key={post.id} style={{ marginTop: hp("1%") }}>
-                <PostListItems
+              <Separator></Separator>
+                <PostListItemsSearch
                   post={post}
                   key={post.id}
                   onPress={() => handlePostPress(post.slug)}
-                ></PostListItems>
+                ></PostListItemsSearch>
               </View>
             );
           })
@@ -89,12 +94,12 @@ const styles = StyleSheet.create({
   },
   searchInput: {
     borderWidth: 2,
-    borderColor: "#F2F2FD",
-    color: "#D3756B",
-    backgroundColor: "white",
+    borderColor: "#f0f0f0",
+    backgroundColor: "#f0f0f0",
     borderRadius: wp("2%"),
     padding: wp("2%"),
     fontSize: hp("2%"),
+    
   },
 });
 

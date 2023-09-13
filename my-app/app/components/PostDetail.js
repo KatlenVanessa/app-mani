@@ -15,6 +15,8 @@ import RelatedPosts from "./RelatedPosts";
 import Separator from "./Separator";
 import { getSinglePost } from "../api/post";
 
+const windowWidth = Dimensions.get("window").width;
+
 const { width } = Dimensions.get("window");
 
 const PostDetail = ({ route, navigation }) => {
@@ -58,22 +60,60 @@ const PostDetail = ({ route, navigation }) => {
 
   return (
     <ScrollView style={styles.container}>
-      <Image
-        source={getImage(thumbnail)}
-        style={{ width: "100%", aspectRatio: 16 / 9 }} // 16:9 é uma proporção de exemplo, você pode ajustá-la
-        resizeMode="cover" // Pode usar 'contain' se preferir manter a imagem completamente visível
-      ></Image>
-      <View style={{ padding: 10 }}>
+      <View style={{ flex: 1 }}>
         <Text
           style={{
             fontWeight: "700",
-            color: "#D3756B",
-            fontSize: 22,
-            marginTop: 15,
+            color: "black",
+            fontSize: windowWidth < 400 ? 20 : 28,
+            marginTop: 30,
+            padding: windowWidth * 0.05,
           }}
         >
           {title}
         </Text>
+
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingLeft: windowWidth * 0.05,
+            paddingBottom: windowWidth * 0.05,
+          }}
+        >
+          <Text
+            selectable
+            style={{
+              color: "black",
+              fontSize: windowWidth * 0.04,
+            }}
+          >
+            Tags
+          </Text>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            {tags.map((tag, index) => (
+              <Text
+                style={{
+                  marginLeft: 5,
+                  color: "grey",
+                  fontSize: windowWidth * 0.04,
+                }}
+                key={tag + index}
+              >
+                #{tag}
+              </Text>
+            ))}
+          </View>
+        </View>
+
+        <Image
+          source={getImage(thumbnail)}
+          style={{ width: "100%", aspectRatio: 16 / 9 }} // 16:9 é uma proporção de exemplo, você pode ajustá-la
+          resizeMode="cover" // Pode usar 'contain' se preferir manter a imagem completamente visível
+        ></Image>
+      </View>
+
+      <View style={{ padding: 10 }}>
         <View
           style={{
             flexDirection: "row",
@@ -83,23 +123,19 @@ const PostDetail = ({ route, navigation }) => {
           }}
         >
           {/* <Text style={{ color: "D3756B" }}>By {author}</Text> */}
-          <Text style={{ color: "#A75D5D" }}>
+          <Text
+            style={{
+              color: "grey",
+              fontSize: windowWidth * 0.04,
+              paddingTop: windowWidth * 0.05,
+              paddingBottom: windowWidth * 0.05,
+              paddingLeft: windowWidth * 0.7,
+            }}
+          >
             {dateFormat(createdAt, "mediumDate")}
           </Text>
         </View>
 
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text selectable style={{ color: "#A75D5D" }}>
-            Tags
-          </Text>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {tags.map((tag, index) => (
-              <Text style={{ marginLeft: 5, color: "black" }} key={tag + index}>
-                #{tag}
-              </Text>
-            ))}
-          </View>
-        </View>
         <Markdown
           //rules={rules}
           style={styles}
@@ -113,7 +149,7 @@ const PostDetail = ({ route, navigation }) => {
         <Text
           style={{
             fontWeight: "bold",
-            color: "#D3756B",
+            color: "black",
             fontSize: 22,
           }}
         >

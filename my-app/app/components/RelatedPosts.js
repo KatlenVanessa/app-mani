@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import PostListItem from "./PostListItems";
+import PostListItemSeach from "./PostListItemsSearch";
 import { getSimilarPost, getSinglePost } from "../api/post";
 import { View, StyleSheet } from "react-native";
+import Separator from "./Separator";
 
 const RelatedPosts = ({ postId, onPostPress }) => {
   const [posts, setPosts] = useState([]);
@@ -21,10 +22,11 @@ const RelatedPosts = ({ postId, onPostPress }) => {
   return posts.map((post) => {
     return (
       <View style={styles.container} key={post.id}>
-        <PostListItem
+      <Separator></Separator>
+        <PostListItemSeach
           onPress={() => onPostPress(post.slug)}
           post={post}
-        ></PostListItem>
+        ></PostListItemSeach>
       </View>
     );
   });

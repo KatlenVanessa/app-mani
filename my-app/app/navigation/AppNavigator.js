@@ -19,9 +19,8 @@ const AppNavigator = () => {
         component={Home}
         name="Início"
         options={{
-          headerShadowVisible: false,
-          title: "Início", // Título personalizado
-          headerTintColor: "#F0997D", // Cor do texto do cabeçalho
+          title: "Home",
+          headerShadowVisible: true,
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
@@ -30,8 +29,8 @@ const AppNavigator = () => {
       />
       <Stack.Screen
         options={{
-          title: "",
-          headerTransparent: false,
+          title: " ",
+          headerTransparent: true,
           headerShadowVisible: false,
           headerLeft: (props) => (
             <TouchableWithoutFeedback {...props} onPress={navigation.goBack}>

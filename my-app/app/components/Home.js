@@ -2,10 +2,11 @@ import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { StyleSheet, FlatList, View, Dimensions, Image, Text } from 'react-native';
 import Slider from './Slider';
 import Separator from './Separator';
-import PostListItems from './PostListItems';
+import PostListItemsHome from './PostListItemsHome';
 import { getFeaturedPosts, getLatestPosts, getSinglePost } from "../api/post"
 import Constants from 'expo-constants';
 import Search from './Search';
+
 
 // const data = [
 //   {
@@ -96,7 +97,6 @@ export default function Home({ navigation }) {
         {featuredPosts.length ? (<Slider data={featuredPosts} />) : null}
         <View style={{ marginTop: 15 }}>
           <Separator ></Separator>
-          <Text style={{ fontWeight: '700', color: '#383838', fontSize: 22, marginTop: 15 }}>Novos Artigos</Text>
         </View>
       </View>
     );
@@ -108,26 +108,16 @@ export default function Home({ navigation }) {
     if (error) console.error(error);
     navigation.navigate('PostDetail', { post });;
   };
-
-  const handlePostPress = (post) => {
-    navigation.navigate('PostDetail', {});
-  };
+  
 
   const renderItem = ({ item }) => {
     return (
-      <View style={{ marginTop: 20 }}>
-        <PostListItems onPress={() => fetchSinglePost(item.slug)} post={item}></PostListItems>
+      <View >
+      <Separator></Separator>
+        <PostListItemsHome onPress={() => fetchSinglePost(item.slug)} post={item}></PostListItemsHome>
       </View>
     );
   };
-
-  const search = () => {
-    return (
-      <Search></Search>
-      
-    );
-  };
-  
 
   const ItemSeparatorComponent = () => {
     <Separator width='90%' style={{ marginTop: 15 }}></Separator>
@@ -139,14 +129,13 @@ export default function Home({ navigation }) {
       keyExtractor={(item) => item.id}
       contentContainerStyle={{ paddingHorizontal: 10, paddingBottom: 20 }}
       ListHeaderComponent={ListHeaderComponent}
-      //ListHeaderComponent={search}
       ItemSeparatorComponent={ItemSeparatorComponent}
       renderItem={renderItem}
       onEndReached={fetchMorePosts} //onEndReached={async () => await fetchMorePosts()}
       onEndReachedThreshold={0}
       ListFooterComponent={() => {
         return reachedToEnd ? (
-          <Text style={{ fontWeight: 'bold', color: '#A75D5D', textAlign: 'center', paddingVertical: 15 }}>Fim</Text>) : null;
+          <Text style={{ fontWeight: 'bold', color: '#e6e6e6', textAlign: 'center', paddingVertical: 15 }}>Fim</Text>) : null;
       }}
     />
   );
