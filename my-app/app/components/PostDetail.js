@@ -67,7 +67,7 @@ const PostDetail = ({ route, navigation }) => {
         <Text
           style={{
             fontWeight: "700",
-            color: "#383838",
+            color: "#D3756B",
             fontSize: 22,
             marginTop: 15,
           }}
@@ -82,19 +82,19 @@ const PostDetail = ({ route, navigation }) => {
             paddingVertical: 5,
           }}
         >
-          <Text style={{ color: "827E7E" }}>By {author}</Text>
-          <Text style={{ color: "827E7E" }}>
+          {/* <Text style={{ color: "D3756B" }}>By {author}</Text> */}
+          <Text style={{ color: "#A75D5D" }}>
             {dateFormat(createdAt, "mediumDate")}
           </Text>
         </View>
 
         <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Text selectable style={{ color: "827E7E" }}>
+          <Text selectable style={{ color: "#A75D5D" }}>
             Tags
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             {tags.map((tag, index) => (
-              <Text style={{ marginLeft: 5, color: "blue" }} key={tag + index}>
+              <Text style={{ marginLeft: 5, color: "black" }} key={tag + index}>
                 #{tag}
               </Text>
             ))}
@@ -113,7 +113,7 @@ const PostDetail = ({ route, navigation }) => {
         <Text
           style={{
             fontWeight: "bold",
-            color: "#383838",
+            color: "#D3756B",
             fontSize: 22,
           }}
         >
@@ -132,17 +132,17 @@ const PostDetail = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   paragraph: {
     lineHeight: 22,
-    color: "#545050",
+    color: "black",
     letterSpacing: 0.8,
   },
   body: {
     fontSize: 16,
   },
   link: {
-    color: "#545050",
+    color: "grey",
   },
   list_item: {
-    color: "#7784f8",
+    color: "grey",
     paddingVertical: 5,
   },
 });

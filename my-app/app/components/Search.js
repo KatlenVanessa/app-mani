@@ -4,6 +4,10 @@ import Constants from "expo-constants";
 import { getSinglePost, searchPosts } from "../api/post";
 import PostListItems from "./PostListItems";
 import { useNavigation } from "@react-navigation/native";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const Search = () => {
   const [query, setQuery] = useState("");
@@ -13,7 +17,7 @@ const Search = () => {
 
   const handleOnSubmit = async () => {
     if (!query.trim()) {
-      return;
+      return setNotFound(true);
     }
 
     const { error, posts } = await searchPosts(query);
@@ -41,7 +45,7 @@ const Search = () => {
         value={query}
         onChangeText={(text) => setQuery(text)}
         placeholder="Buscar.."
-        style={styles.searchInput}
+        style={[styles.searchInput, { width: wp("90%") }]} // Defina a largura responsiva aqui
         onSubmitEditing={handleOnSubmit}
       ></TextInput>
 
@@ -50,10 +54,10 @@ const Search = () => {
           <Text
             style={{
               fontWeight: "bold",
-              fontSize: 22,
+              fontSize: hp("2%"),
               color: "rgba(0,0,0,0.3)",
               textAlign: "center",
-              marginTop: 20,
+              marginTop: hp("2%"),
             }}
           >
             Resultado Não Encontrado
@@ -61,7 +65,7 @@ const Search = () => {
         ) : (
           results.map((post) => {
             return (
-              <View key={post.id} style={{ marginTop: 10 }}>
+              <View key={post.id} style={{ marginTop: hp("1%") }}>
                 <PostListItems
                   post={post}
                   key={post.id}
@@ -75,18 +79,22 @@ const Search = () => {
     </View>
   );
 };
+
 const styles = StyleSheet.create({
   container: {
     paddingTop: Constants.statusBarHeight,
-    padding: 10,
+    padding: wp("5%"),
+    marginTop: hp("2%"),
     flex: 1,
   },
   searchInput: {
     borderWidth: 2,
-    borderColor: "#383838",
-    borderRadius: 5,
-    padding: 5,
-    fontSize: 16,
+    borderColor: "#F2F2FD",
+    color: "#D3756B",
+    backgroundColor: "white",
+    borderRadius: wp("2%"),
+    padding: wp("2%"),
+    fontSize: hp("2%"),
   },
 });
 

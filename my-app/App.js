@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import TabNavigation from "./app/navigation/TabNavigation";
+import BotoesInicial from "./app/navigation/BotoesInicial";
 import NoInternet from "./app/components/NoInternet";
 import { useNetInfo } from "@react-native-community/netinfo";
 

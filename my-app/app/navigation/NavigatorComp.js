@@ -1,3 +1,6 @@
+
+import BotoesInicial from "./BotoesInicial";
+import Search from "../components/Search";
 import React from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -9,15 +12,15 @@ import { useWindowDimensions } from "react-native";
 
 const Stack = createNativeStackNavigator();
 
-const AppNavigator = () => {
+const NavigatorComp = () => {
   const navigation = useNavigation();
   const windowWidth = useWindowDimensions().width; // Obtém a largura da tela
 
   return (
     <Stack.Navigator>
       <Stack.Screen
-        component={Home}
-        name="Início"
+        name="Botoes"
+        component={BotoesInicial}
         options={{
           headerShadowVisible: false,
           title: "Início", // Título personalizado
@@ -28,6 +31,7 @@ const AppNavigator = () => {
           },
         }}
       />
+      
       <Stack.Screen
         options={{
           title: "",
@@ -57,4 +61,4 @@ const AppNavigator = () => {
   );
 };
 
-export default AppNavigator;
+export default NavigatorComp;
