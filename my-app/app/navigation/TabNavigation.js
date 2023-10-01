@@ -4,7 +4,6 @@ import { AntDesign } from "@expo/vector-icons";
 import AppNavigator from "./AppNavigator";
 import Settings from "../components/Settings";
 import { Pressable, useWindowDimensions } from "react-native";
-import NavigatorComp from "./NavigatorComp";
 import Search from "../components/Search";
 import Favs from "../components/Favs";
 import Home from "../components/Home";
@@ -71,7 +70,7 @@ const TabNavigation = () => {
             fontWeight: "bold", // Peso da fonte
           },
         }}
-        name="Pesquisar"
+        name="Explorar"
         component={Search}
       ></Tab.Screen>
 
