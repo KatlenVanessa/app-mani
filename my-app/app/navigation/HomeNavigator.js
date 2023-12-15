@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "../components/Home";
+import Home from "../screens/Home";
 import PostDetail from "../components/PostDetail";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
@@ -21,9 +21,14 @@ const AppNavigator = () => {
         options={{
           title: "Home",
           headerShadowVisible: true,
+          
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
+            color: 'white'
+          },
+          headerStyle: {
+            backgroundColor: "#FFA9C6"
           },
         }}
       />

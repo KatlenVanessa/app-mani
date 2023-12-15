@@ -1,12 +1,12 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AntDesign } from "@expo/vector-icons";
-import AppNavigator from "./AppNavigator";
-import Settings from "../components/Settings";
+import HomeNavigator from "./HomeNavigator";
+import Settings from "../screens/Settings";
 import { Pressable, useWindowDimensions } from "react-native";
-import Search from "../components/Search";
-import Favs from "../components/Favs";
-import Home from "../components/Home";
+import Search from "../screens/Search";
+import Favs from "../screens/Favs";
+import Home from "../screens/Home";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,8 +32,9 @@ const TabNavigation = () => {
           // You can return any component that you like here!
           return <AntDesign name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "black",
-        tabBarInactiveTintColor: "gray",
+        tabBarStyle: {backgroundColor: "white"},
+        tabBarActiveTintColor: "#E91D63",
+        tabBarInactiveTintColor: "#ADADAD",
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         headerShadowVisible: false,
@@ -44,17 +45,18 @@ const TabNavigation = () => {
           tabBarIcon: ({ focused, color, size }) => {
             return <AntDesign name="home" size={size} color={color} />;
           },
-          headerShown: true,
+          headerShown: false,
           title: "  ",
           headerShadowVisible: false,
           headerStatusBarHeight: 30,
+
           // headerTitleStyle: {
           //   fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
           //   fontWeight: "bold", // Peso da fonte
           // },
         }}
         name="Início"
-        component={AppNavigator}
+        component={HomeNavigator}
       ></Tab.Screen>
 
       <Tab.Screen
@@ -62,12 +64,16 @@ const TabNavigation = () => {
           tabBarIcon: ({ focused, color, size }) => {
             return <AntDesign name="search1" size={size} color={color} />;
           },
+          headerStyle: {
+            backgroundColor: "#FFA9C6"
+          },
           headerShown: true,
           headerShadowVisible: false,
-          headerStatusBarHeight: 90,
+          headerStatusBarHeight: 20,
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
+            color: "white"
           },
         }}
         name="Explorar"
@@ -79,12 +85,16 @@ const TabNavigation = () => {
           tabBarIcon: ({ focused, color, size }) => {
             return <AntDesign name="tags" size={size} color={color} />;
           },
+          headerStyle: {
+            backgroundColor: "#FFA9C6"
+          },
           headerShown: true,
           headerShadowVisible: true,
-          headerStatusBarHeight: 90,
+          headerStatusBarHeight: 20,
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
+            color: "white"
           },
         }}
         name="Favoritos"
@@ -96,12 +106,16 @@ const TabNavigation = () => {
           tabBarIcon: ({ focused, color, size }) => {
             return <AntDesign name="user" size={size} color={color} />;
           },
+          headerStyle: {
+            backgroundColor: "#FFA9C6"
+          },
           headerShown: true,
           headerShadowVisible: true,
-          headerStatusBarHeight: 90,
+          headerStatusBarHeight: 20,
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
+            color: "white"
           },
         }}
         name="Perfil"

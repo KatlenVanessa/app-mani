@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import { StyleSheet, FlatList, View, Dimensions, Image, Text } from 'react-native';
-import Slider from './Slider';
-import Separator from './Separator';
-import PostListItemsHome from './PostListItemsHome';
+import Slider from '../components/Slider';
+import Separator from '../components/Separator';
+import PostListItemsHome from '../components/PostListItemsHome';
 import { getFeaturedPosts, getLatestPosts, getSinglePost } from "../api/post"
 import Constants from 'expo-constants';
 import Search from './Search';
@@ -102,6 +102,7 @@ export default function Home({ navigation }) {
     );
   }, [featuredPosts]);
 
+//Navega para o post
   const fetchSinglePost = async (slug) => {
     const { error, post } = await getSinglePost(slug);
 
@@ -109,7 +110,7 @@ export default function Home({ navigation }) {
     navigation.navigate('PostDetail', { post });;
   };
   
-
+//Ao clicar na opcao da lista, chama a função acima que renderiza o post
   const renderItem = ({ item }) => {
     return (
       <View >

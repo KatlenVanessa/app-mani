@@ -2,14 +2,14 @@ import React, { useState } from "react";
 import { View, StyleSheet, TextInput, ScrollView, Text } from "react-native";
 import Constants from "expo-constants";
 import { getSinglePost, searchPosts } from "../api/post";
-import PostListItemsSearch from "./PostListItemsSearch";
+import PostListItemsSearch from "../components/PostListItemsSearch";
 import { useNavigation } from "@react-navigation/native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from "react-native-responsive-screen";
 import { AntDesign } from "@expo/vector-icons";
-import Separator from "./Separator";
+import Separator from "../components/Separator";
 
 
 const Search = () => {
