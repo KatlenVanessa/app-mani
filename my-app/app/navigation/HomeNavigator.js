@@ -25,10 +25,10 @@ const AppNavigator = () => {
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
-            color: 'white'
+            color: 'black'
           },
           headerStyle: {
-            backgroundColor: "#FFA9C6"
+            backgroundColor: "white"
           },
         }}
       />

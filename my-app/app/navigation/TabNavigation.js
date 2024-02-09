@@ -7,6 +7,7 @@ import { Pressable, useWindowDimensions } from "react-native";
 import Search from "../screens/Search";
 import Favs from "../screens/Favs";
 import Home from "../screens/Home";
+import Canais from "../screens/Canais";
 
 const Tab = createBottomTabNavigator();
 
@@ -32,9 +33,9 @@ const TabNavigation = () => {
           // You can return any component that you like here!
           return <AntDesign name={iconName} size={size} color={color} />;
         },
-        tabBarStyle: {backgroundColor: "white"},
-        tabBarActiveTintColor: "#E91D63",
-        tabBarInactiveTintColor: "#ADADAD",
+        tabBarStyle: { backgroundColor: "white" },
+        tabBarActiveTintColor: "black",
+        tabBarInactiveTintColor: "gray",
         tabBarShowLabel: false,
         tabBarHideOnKeyboard: true,
         headerShadowVisible: false,
@@ -65,7 +66,7 @@ const TabNavigation = () => {
             return <AntDesign name="search1" size={size} color={color} />;
           },
           headerStyle: {
-            backgroundColor: "#FFA9C6"
+            backgroundColor: "white"
           },
           headerShown: true,
           headerShadowVisible: false,
@@ -73,7 +74,7 @@ const TabNavigation = () => {
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
-            color: "white"
+            color: "black"
           },
         }}
         name="Explorar"
@@ -83,23 +84,25 @@ const TabNavigation = () => {
       <Tab.Screen
         options={{
           tabBarIcon: ({ focused, color, size }) => {
-            return <AntDesign name="tags" size={size} color={color} />;
+            return <AntDesign name="bars" size={size} color={color} />;
           },
           headerStyle: {
-            backgroundColor: "#FFA9C6"
+            backgroundColor: "white"
           },
           headerShown: true,
-          headerShadowVisible: true,
+          headerShadowVisible: false,
           headerStatusBarHeight: 20,
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
-            color: "white"
+            color: "black"
           },
         }}
-        name="Favoritos"
-        component={Favs}
+        name="Canais"
+        component={Canais}
       ></Tab.Screen>
+
+     
 
       <Tab.Screen
         options={{
@@ -107,7 +110,7 @@ const TabNavigation = () => {
             return <AntDesign name="user" size={size} color={color} />;
           },
           headerStyle: {
-            backgroundColor: "#FFA9C6"
+            backgroundColor: "white"
           },
           headerShown: true,
           headerShadowVisible: true,
@@ -115,7 +118,7 @@ const TabNavigation = () => {
           headerTitleStyle: {
             fontSize: windowWidth < 400 ? 20 : 28, // Tamanho do texto do cabeçalho
             fontWeight: "bold", // Peso da fonte
-            color: "white"
+            color: "black"
           },
         }}
         name="Perfil"

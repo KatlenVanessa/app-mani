@@ -12,7 +12,7 @@ const CUSTOM_THEME = {
 };
 
 const App = () => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const [isLoggedIn, setLoggedIn] = useState(true);
 
   const [noInternet, setNoInternet] = useState(false);
   //console.log(netInfo);
