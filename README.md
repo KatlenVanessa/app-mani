@@ -19,8 +19,26 @@ O aplicativo "Mani" foi idealizado como parte de uma pesquisa abrangente sobre a
 - **CORS**: Conjunto de cabeçalhos HTTP que controlam solicitações e respostas entre diferentes origens.
 
 ## Demonstrações
+### Home
 
+<p align="left">
+  <img src="screenshots/Home 2.png" width="130">
+</p>
 
+### Explorar e Canais
+
+<p align="left">
+  <img src="screenshots/Explorar.png" width="130">
+  <img src="screenshots/Canais.png" width="130">
+</p>
+
+### Pesquisas
+
+<p align="left">
+  <img src="screenshots/DEMO PESQUISA 1.png" width="130">
+  <img src="screenshots/DEMO PESQUISA 2.png" width="130">
+  <img src="screenshots/DEMO PESQUISA 3.png" width="130">
+</p>
 
 ## Licença
 
