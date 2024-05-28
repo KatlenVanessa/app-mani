@@ -1,4 +1,4 @@
-# README do Projeto "Mani"
+Projeto "Mani"
 
 ## Introdução
 
