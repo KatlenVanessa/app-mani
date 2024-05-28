@@ -18,6 +18,10 @@ O aplicativo "Mani" foi idealizado como parte de uma pesquisa abrangente sobre a
 - **Axios**: Biblioteca JavaScript para fazer requisições HTTP a servidores.
 - **CORS**: Conjunto de cabeçalhos HTTP que controlam solicitações e respostas entre diferentes origens.
 
+## Demonstrações
+
+
+
 ## Licença
 
 Este projeto está licenciado sob a Licença MIT. Consulte o arquivo [LICENSE](LICENSE) para obter mais informações.
